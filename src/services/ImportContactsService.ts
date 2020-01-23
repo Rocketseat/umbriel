@@ -7,8 +7,6 @@ import parseCSVAsync from '../utils/parseCSVAsync';
 
 class ImportContactsService {
   async run(contactsFileStream: Readable, tags: string[]): Promise<void> {
-    const emails = await parseCSVAsync(contactsFileStream);
-
     const existentTags = await Tag.find({
       title: {
         $in: tags,
@@ -23,6 +21,8 @@ class ImportContactsService {
 
     const createdTags = await Tag.create(newTagsData);
     const tagsIds = createdTags.map(tag => tag._id);
+
+    const emails = await parseCSVAsync(contactsFileStream);
 
     await Promise.all(
       emails.map(email =>
