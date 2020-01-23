@@ -1,0 +1,73 @@
+version: '3.6'
+
+networks:
+  umbriel-network:
+    driver: bridge
+
+services:
+  umbriel-api:
+    build: .
+    volumes:
+      - .:/home/node/api
+    environment:
+      - MONGO_URL=umbriel-mongo
+      - REDIS_URL=umbriel-redis
+    depends_on:
+      - umbriel-mongo
+      - umbriel-redis
+    networks:
+      - umbriel-network
+    links:
+      - umbriel-mongo
+      - umbriel-redis 
+    container_name: umbriel-api
+    command: yarn dev
+    ports:
+      - 3333:3333
+
+  umbriel-queue:
+    build: .
+    volumes:
+      - .:/home/node/api
+    environment:
+      - MONGO_URL=umbriel-mongo
+      - REDIS_URL=umbriel-redis
+    depends_on:
+      - umbriel-mongo
+      - umbriel-redis
+    networks:
+      - umbriel-network
+    links:
+      - umbriel-mongo
+      - umbriel-redis 
+    container_name: umbriel-queue
+    command: yarn queue
+    
+  umbriel-mongo:
+    image: bitnami/mongodb:latest
+    container_name: umbriel-mongo
+    restart: always
+    environment:
+      - ALLOW_EMPTY_PASSWORD=no
+      - MONGODB_USERNAME=${MONGO_USER}
+      - MONGODB_PASSWORD=${MONGO_PASS}
+      - MONGODB_DATABASE=${MONGO_DB}
+    ports:
+      - "27017:27017"
+    volumes:
+      - /tmp/mongo:/bitnami
+    networks:
+      - umbriel-network
+
+  umbriel-redis:
+    image: bitnami/redis:latest
+    container_name: umbriel-redis
+    restart: always
+    environment:
+      - ALLOW_EMPTY_PASSWORD=no
+      - REDIS_PASSWORD=${REDIS_PASS}
+    volumes:
+      - /tmp/redis:/bitnami/redis/data
+    networks:
+      - umbriel-network
+

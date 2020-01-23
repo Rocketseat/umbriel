@@ -1,6 +1,3 @@
-import 'dotenv/config';
-import Tag from '@schemas/Tag';
-
 import express from 'express';
 import routes from './routes';
 
