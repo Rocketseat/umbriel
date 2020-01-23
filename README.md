@@ -14,6 +14,6 @@ Send emails to a list the easy way
 - Use messaging service (Redis);
 
 **Business rules**
-- Na importação, se a tag não existir ela deve ser criada;
-- Na importação, se o usuário já existir, só vamos veicula-lo com a tag;
-- A importação deve permitir múltiplas tags;
+- On import, if the tag does not exist, it must be created;
+- On import, if the user already exists, we will only serve it with the tag;
+- The import must allow multiple tags;
