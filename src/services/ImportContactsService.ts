@@ -19,13 +19,16 @@ class ImportContactsService {
     });
 
     const existentTagsTitles = existentTags.map(tag => tag.title);
+    const existentTagsIds = existentTags.map(tag => tag._id);
 
     const newTagsData = tags
       .filter(tag => !existentTagsTitles.includes(tag))
       .map(tag => ({ title: tag }));
 
     const createdTags = await Tag.create(newTagsData);
-    const tagsIds = createdTags.map(tag => tag._id);
+    const createdTagsIds = createdTags.map(tag => tag._id);
+
+    const tagsIds = [...existentTagsIds, ...createdTagsIds];
 
     parseCSV.on('data', async line => {
       const [email] = line;
