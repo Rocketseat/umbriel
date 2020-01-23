@@ -22,17 +22,13 @@ class ImportContactsService {
     const createdTags = await Tag.create(newTagsData);
     const tagsIds = createdTags.map(tag => tag._id);
 
-    const emails = await parseCSVAsync(contactsFileStream);
-
-    await Promise.all(
-      emails.map(email =>
-        Contact.findOneAndUpdate(
-          { email },
-          { $addToSet: { tags: tagsIds } },
-          { upsert: true },
-        ),
-      ),
-    );
+    await parseCSVAsync(contactsFileStream, async email => {
+      await Contact.findOneAndUpdate(
+        { email },
+        { $addToSet: { tags: tagsIds } },
+        { upsert: true },
+      );
+    });
   }
 }
 
