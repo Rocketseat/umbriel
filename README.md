@@ -1,19 +1,19 @@
-Enviar emails pra uma lista de uma forma fácil
+Send emails to a list the easy way
 --------
 
-RF
-- Importar uma lista em CSV e relacionar ela com um tag;
-- Enviar mensagem para uma ou mais tags;
-- Listar inscritos em uma ou mais tag;
-- Visualização do progresso de envio (concluído/não concluído);
+**Functional resources**
+- Import a list in CSV and relate it to a tag;
+- Send message to one or more tags;
+- List subscribers in one or more tags;
+- Viewing the shipping progress (completed / not completed);
 
-RNF
-- Utilizar Amazon SES ($1 - 10.000)
-- Utilizar MongoDB
-- Utilizar Express
-- Utilizar serviço mensageria (Redis)
+**Non-functional resources**
+- Use Amazon SES ($ 1 - 10,000);
+- Using MongoDB;
+- Use Express;
+- Use messaging service (Redis);
 
-RN
-- Na importação, se a tag não existir ela deve ser criada
-- Na importação, se o usuário já existir, só vamos veicula-lo com a tag
-- A importação deve permitir múltiplas tags
+**Business rules**
+- Na importação, se a tag não existir ela deve ser criada;
+- Na importação, se o usuário já existir, só vamos veicula-lo com a tag;
+- A importação deve permitir múltiplas tags;
