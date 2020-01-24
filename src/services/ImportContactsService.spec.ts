@@ -6,10 +6,12 @@ import Tag from '@schemas/Tag';
 
 import ImportContactsService from './ImportContactsService';
 
-jest.setTimeout(60000);
-
 const FAKE = {
-  CONTACTS: ['fake1@hotmail.com', 'fake2@gmail.com', 'fake3@yahoo.com'],
+  CONTACTS: [
+    'diego@rocketseat.com.br',
+    'robson@rocketseat.com.br',
+    'cleiton@rocketseat.com.br',
+  ],
   TAGS: ['Students', 'Class A'],
 };
 
