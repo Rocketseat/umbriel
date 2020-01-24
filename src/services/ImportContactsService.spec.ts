@@ -84,7 +84,7 @@ describe('Import', () => {
 
   it('should not recreate contacts that already exists', async () => {
     // Create a premature contact with a tag
-    const tag = await Tag.create({ title: 'Students ' });
+    const tag = await Tag.create({ title: FAKE.TAGS[0] });
     await Contact.create({ email: FAKE.CONTACTS[0], tags: [tag._id] });
 
     // Execute service
