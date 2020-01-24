@@ -1,10 +1,24 @@
 import mongoose from 'mongoose';
 import { Readable } from 'stream';
 
-import ImportContactsService from '@services/ImportContactsService';
-
 import Contact from '@schemas/Contact';
 import Tag from '@schemas/Tag';
+
+import ImportContactsService from './ImportContactsService';
+
+jest.setTimeout(60000);
+
+const FAKE = {
+  CONTACTS: ['fake1@hotmail.com', 'fake2@gmail.com', 'fake3@yahoo.com'],
+  TAGS: ['Students', 'Class A'],
+};
+
+async function executeService() {
+  const contactsFileStream = Readable.from(FAKE.CONTACTS.map(e => e + '\n'));
+
+  const importContacts = new ImportContactsService();
+  await importContacts.run(contactsFileStream, FAKE.TAGS);
+}
 
 describe('Import', () => {
   beforeAll(async () => {
@@ -30,92 +44,60 @@ describe('Import', () => {
   });
 
   it('should be able to import new contacts', async () => {
-    const contactsFileStream = Readable.from([
-      'diego@rocketseat.com.br\n',
-      'robson@rocketseat.com.br\n',
-      'cleiton@rocketseat.com.br\n',
-    ]);
+    // Execute service
+    await executeService();
 
-    const importContacts = new ImportContactsService();
-
-    await importContacts.run(contactsFileStream, ['Students', 'Class A']);
-
+    // Expect all tags are created
     const createdTags = await Tag.find({}).lean();
-
     expect(createdTags).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({ title: 'Students' }),
-        expect.objectContaining({ title: 'Class A' }),
-      ]),
+      FAKE.TAGS.map(title => expect.objectContaining({ title })),
     );
 
+    // Expect all contacts are created
     const createdTagsIds = createdTags.map(tag => tag._id);
-
     const createdContacts = await Contact.find({}).lean();
-
     expect(createdContacts).toEqual(
-      expect.arrayContaining([
+      FAKE.CONTACTS.map(email =>
         expect.objectContaining({
-          email: 'diego@rocketseat.com.br',
+          email,
           tags: createdTagsIds,
         }),
-        expect.objectContaining({
-          email: 'robson@rocketseat.com.br',
-          tags: createdTagsIds,
-        }),
-        expect.objectContaining({
-          email: 'cleiton@rocketseat.com.br',
-          tags: createdTagsIds,
-        }),
-      ]),
+      ),
     );
   });
 
   it('should not recreate tags that already exists', async () => {
-    const contactsFileStream = Readable.from([
-      'diego@rocketseat.com.br\n',
-      'robson@rocketseat.com.br\n',
-      'cleiton@rocketseat.com.br\n',
-    ]);
+    // Create a premature tag
+    await Tag.create({ title: FAKE.TAGS[0] });
 
-    const importContacts = new ImportContactsService();
+    // Execute service
+    await executeService();
 
-    await Tag.create({ title: 'Students' });
-
-    await importContacts.run(contactsFileStream, ['Students', 'Class A']);
-
+    // Expect not duplicate tag
     const createdTags = await Tag.find({}).lean();
-
-    expect(createdTags).toEqual([
-      expect.objectContaining({ title: 'Students' }),
-      expect.objectContaining({ title: 'Class A' }),
-    ]);
+    expect(createdTags).toEqual(
+      FAKE.TAGS.map(title => expect.objectContaining({ title })),
+    );
   });
 
   it('should not recreate contacts that already exists', async () => {
-    const contactsFileStream = Readable.from([
-      'diego@rocketseat.com.br\n',
-      'robson@rocketseat.com.br\n',
-      'cleiton@rocketseat.com.br\n',
-    ]);
+    // Create a premature contact with a tag
+    const tag = await Tag.create({ title: 'Students ' });
+    await Contact.create({ email: FAKE.CONTACTS[0], tags: [tag._id] });
 
-    const importContacts = new ImportContactsService();
+    // Execute service
+    await executeService();
 
-    const tag = await Tag.create({ title: 'Students' });
-    await Contact.create({ email: 'diego@rocketseat.com.br', tags: [tag._id] });
-
-    await importContacts.run(contactsFileStream, ['Class A']);
-
-    const contacts = await Contact.find({
-      email: 'diego@rocketseat.com.br',
-    })
+    const contacts = await Contact.find({ email: FAKE.CONTACTS[0] })
       .populate('tags')
       .lean();
 
+    // Expect not duplicate contact
     expect(contacts.length).toBe(1);
-    expect(contacts[0].tags).toEqual([
-      expect.objectContaining({ title: 'Students' }),
-      expect.objectContaining({ title: 'Class A' }),
-    ]);
+
+    // Expect not duplicate tag in contact and a new tag added
+    expect(contacts[0].tags).toEqual(
+      FAKE.TAGS.map(title => expect.objectContaining({ title })),
+    );
   });
 });
