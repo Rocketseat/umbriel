@@ -1,0 +1,42 @@
+version: '3.4'
+
+services:
+  app:
+    container_name: '${PROJECT_NAME}_app'
+    image: '${PROJECT_NAME}:latest'
+    env_file: '${PWD}/.env'
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+      target: base
+    volumes:
+      - ${PWD}:/home/node/app
+    networks:
+      - app-network
+    depends_on:
+      - db
+
+  tests:
+    container_name: '${PROJECT_NAME}_tests'
+    image: '${PROJECT_NAME}_tests:latest'
+    environment:
+      MONGO_URL: mongodb://localhost:27017/jest
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+      target: test
+    volumes:
+      - ${PWD}:/home/node/app
+  db:
+    image: mongo:4.0
+    container_name: '${PROJECT_NAME}_db'
+    env_file: '${PWD}/.env'
+    volumes:
+      - ${PWD}/docker/volumes/mongodb:/data/db
+      - ${PWD}/docker/scripts:/docker-entrypoint-initdb.d
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

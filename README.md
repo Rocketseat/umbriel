@@ -17,3 +17,10 @@ Send emails to a list the easy way
 - On import, if the tag does not exist, it must be created;
 - On import, if the user already exists, we will only serve it with the tag;
 - The import must allow multiple tags;
+
+## Running on Docker
+### Requirements
+- Docker >= 19.03.5
+- Docker Compose >= 1.25.0
+
+Runs `source dev.sh` for help (OS Unix based).
