@@ -12,16 +12,17 @@ class ImportContactsService {
 
     const parseCSV = contactsFileStream.pipe(parsers);
 
+    const uniqueTags = tags.filter((tag, index) => tags.indexOf(tag) === index);
     const existentTags = await Tag.find({
       title: {
-        $in: tags,
+        $in: uniqueTags,
       },
     });
 
     const existentTagsTitles = existentTags.map(tag => tag.title);
     const existentTagsIds = existentTags.map(tag => tag._id);
 
-    const newTagsData = tags
+    const newTagsData = uniqueTags
       .filter(tag => !existentTagsTitles.includes(tag))
       .map(tag => ({ title: tag }));
 
