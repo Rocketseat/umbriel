@@ -36,6 +36,15 @@
         {
           "ts": "never"
         }
+      ],
+      "import/no-extraneous-dependencies": [
+        "error", 
+        {
+          "devDependencies": [
+            "**/*.spec.ts",
+            "src/utils/tests/*.ts"
+          ]
+        }
       ]
     },
     "overrides": [

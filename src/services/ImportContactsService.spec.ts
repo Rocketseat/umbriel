@@ -1,32 +1,23 @@
-import mongoose from 'mongoose';
 import { Readable } from 'stream';
+import MongoMock from '@utils/tests/MongoMock';
 
 import ImportContactsService from '@services/ImportContactsService';
 
-import Contact from '@schemas/Contact';
 import Tag from '@schemas/Tag';
+import Contact from '@schemas/Contact';
 
-describe('Import', () => {
+describe('Import Contacts', () => {
   beforeAll(async () => {
-    if (!process.env.MONGO_URL) {
-      throw new Error('MongoDB server not initialized');
-    }
-
-    await mongoose.connect(process.env.MONGO_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
-    });
+    await MongoMock.connect();
   });
 
   afterAll(async () => {
-    await mongoose.connection.close();
+    await MongoMock.disconnect();
   });
 
   beforeEach(async () => {
-    await Contact.deleteMany({});
     await Tag.deleteMany({});
+    await Contact.deleteMany({});
   });
 
   it('should be able to import new contacts', async () => {
