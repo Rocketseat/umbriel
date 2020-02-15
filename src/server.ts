@@ -13,6 +13,8 @@ mongoose.connect(
   },
 );
 
-app.listen(process.env.PORT || 3333, () => {
-  console.log('⚡️ Server listening on http://localhost:3333');
+const serverPort = process.env.PORT || 3333;
+
+app.listen(serverPort, () => {
+  console.log(`⚡️ Server listening on http://localhost:${serverPort}`);
 });
