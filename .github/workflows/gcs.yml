@@ -1,0 +1,61 @@
+# This workflow will build the app end deploy it to GCS.
+name: Build and Deploy to GCS
+
+on:
+  push:
+    tags:
+    - '*'
+
+# Environment variables available to all jobs and steps in this workflow
+env:
+  GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
+  GCP_EMAIL: ${{ secrets.GCP_EMAIL_TEST }}
+  REACT_APP_API_URL: ${{ secrets.API_URL }}
+  BUCKET: umbriel
+
+jobs:
+  setup-build-deploy:
+    name: Setup, Build and Deploy
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v2
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+
+    # Install project dependencies
+    - name: Install dependencies
+      run: |
+        yarn install
+
+    # Build the app
+    - name: Build
+      run: |
+        yarn build
+
+    # Setup gcloud CLI
+    - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      with:
+        version: '278.0.0'
+        service_account_email: ${{ secrets.GCP_EMAIL_TEST }}
+        service_account_key: ${{ secrets.GCP_KEY_TEST }}
+
+    # rsync bucket with build directory
+    - name: rsync
+      run: gsutil -m rsync -R ./build gs://"$BUCKET"
+
+    # Make files public
+    - name: Allow AllUsers
+      run: gsutil -m acl ch -R -u AllUsers:R gs://"$BUCKET"
+    
+    # Set cache meta for static files
+    - name: Set Cache-Control
+      run: gsutil -m setmeta -h "Cache-Control:public, max-age=15768000" gs://"$BUCKET"/**/*.{png,svg,css,js}
+
+    # Set cache meta for index.html
+    - name: Set Cache-Control
+      run: gsutil setmeta -h "Cache-Control:no-cache, no-store" gs://"$BUCKET"/index.html

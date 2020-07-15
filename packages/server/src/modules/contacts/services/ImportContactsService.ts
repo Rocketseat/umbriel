@@ -1,0 +1,60 @@
+import { Readable } from 'stream';
+import csvParse from 'csv-parse';
+
+import Service from '@shared/core/Service';
+
+import Tag from '@modules/contacts/infra/mongoose/schemas/Tag';
+import Contact from '@modules/contacts/infra/mongoose/schemas/Contact';
+
+interface Request {
+  contactsFileStream: Readable;
+  tags: string[];
+}
+
+class ImportContactsService implements Service<Request, void> {
+  async execute({ contactsFileStream, tags }: Request): Promise<void> {
+    const parsers = csvParse({
+      delimiter: ';',
+    });
+
+    const parseCSV = contactsFileStream.pipe(parsers);
+
+    const existentTags = await Tag.find({
+      title: {
+        $in: tags,
+      },
+    });
+
+    const existentTagsTitles = existentTags.map(tag => tag.title);
+    const existentTagsIds = existentTags.map(tag => tag._id);
+
+    const newTagsData = tags
+      .filter(tag => !existentTagsTitles.includes(tag))
+      .map(tag => ({ title: tag }));
+
+    const createdTags = await Tag.create(newTagsData);
+    let createdTagsIds = createdTags?.map(tag => tag._id);
+
+    if (!createdTagsIds) {
+      createdTagsIds = [];
+    }
+
+    const tagsIds = [...existentTagsIds, ...createdTagsIds];
+
+    parseCSV.on('data', async line => {
+      const [email] = line;
+
+      if (!email) return;
+
+      await Contact.findOneAndUpdate(
+        { email, subscribed: true },
+        { $addToSet: { tags: tagsIds } },
+        { upsert: true },
+      );
+    });
+
+    await new Promise(resolve => parseCSV.on('end', resolve));
+  }
+}
+
+export default ImportContactsService;
