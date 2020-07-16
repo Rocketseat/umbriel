@@ -1,0 +1,49 @@
+name: Server
+
+on:
+  push:
+    tags:
+    - '*'
+    paths:
+    - 'packages/server/**'
+    - '!packages/server/.vscode/**'
+
+env:
+  GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
+  IMAGE: umbriel
+  REGISTRY_HOSTNAME: us.gcr.io
+
+jobs:
+  deploy-server:
+
+    name: Build & Publish
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v2
+    
+    - name: Set tag
+      run: echo ::set-env name=RELEASE_VERSION::${GITHUB_REF:10}
+
+    - name: Setup gcloud
+      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      with:
+        version: '290.0.1'
+        project_id: ${{ secrets.GCP_PROJECT }}
+        service_account_key: ${{ secrets.GCP_CONTAINER_PUSHER }}
+        export_default_credentials: true
+
+    - name: Configure docker client
+      run: gcloud auth configure-docker
+      
+    - name: Build
+      working-directory: packages/server
+      run: |        
+        docker build -t "$REGISTRY_HOSTNAME"/"$GCP_PROJECT"/"$IMAGE":latest \
+          -t "$REGISTRY_HOSTNAME"/"$GCP_PROJECT"/"$IMAGE":"$RELEASE_VERSION" \
+          --build-arg GITHUB_SHA="$GITHUB_SHA" \
+          --build-arg GITHUB_REF="$GITHUB_REF" .
+
+    - name: Publish
+      run: docker push "$REGISTRY_HOSTNAME"/"$GCP_PROJECT"/"$IMAGE"

@@ -1,0 +1,57 @@
+name: Web
+
+on:
+  push:
+    tags:
+    - '*'
+    paths:
+    - 'packages/web/**'
+
+env:
+  GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
+  BUCKET: umbriel
+  REACT_APP_API_URL: ${{ secrets.API_URL }}
+
+jobs:
+  deploy-web:
+  
+    name: Build & Publish
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v2
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+
+    - name: Install dependencies
+      working-directory: packages/web
+      run: yarn install
+
+    - name: Build
+      working-directory: packages/web
+      run: yarn build
+
+    - name: Setup gcloud
+      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      with:
+        version: '290.0.1'
+        project_id: ${{ secrets.GCP_PROJECT }}
+        service_account_key: ${{ secrets.GCP_CONTAINER_PUSHER }}
+        export_default_credentials: true
+
+    - name: rsync bucket with build
+      working-directory: packages/web
+      run: gsutil -m rsync -R ./build gs://"$BUCKET"
+
+    - name: Make files public
+      run: gsutil -m acl ch -R -u AllUsers:R gs://"$BUCKET"
+    
+    - name: Set cache meta for static files
+      run: gsutil -m setmeta -h "Cache-Control:public, max-age=15768000" gs://"$BUCKET"/**/*.{png,svg,css,js}
+
+    - name: Set cache meta for index.html
+      run: gsutil setmeta -h "Cache-Control:no-cache, no-store" gs://"$BUCKET"/index.html
