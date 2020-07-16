@@ -31,7 +31,7 @@ jobs:
       with:
         version: '290.0.1'
         project_id: ${{ secrets.GCP_PROJECT }}
-        service_account_key: ${{ secrets.GCP_KEY }}
+        service_account_key: ${{ secrets.GCP_CONTAINER_PUSHER }}
         export_default_credentials: true
 
     - name: Configure docker client
