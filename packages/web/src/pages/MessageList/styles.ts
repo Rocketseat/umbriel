@@ -18,14 +18,13 @@ export const Container = styled.main`
   }
 `;
 
-
 export const ProgressBar = styled.div<ProgressProps>`
   height: 20px;
   width: 100%;
   border-radius: 4px;
   background: #999;
   position: relative;
-  
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -34,7 +33,7 @@ export const ProgressBar = styled.div<ProgressProps>`
     font-size: 13px;
     line-height: 21px;
     z-index: 5;
-    color: #FFF;
+    color: #fff;
     font-weight: bold;
   }
 
@@ -47,6 +46,6 @@ export const ProgressBar = styled.div<ProgressProps>`
     position: absolute;
     left: 0;
     top: 0;
-    background: #FF79C6;
+    background: #ff79c6;
   }
 `;

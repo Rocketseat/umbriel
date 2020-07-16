@@ -2,7 +2,7 @@ import React, { useMemo, useCallback } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { parseISO, format } from 'date-fns';
 import { mutate } from 'swr';
-import { MdMail } from 'react-icons/md'
+import { MdMail } from 'react-icons/md';
 import useRequest from '../../services/useRequest';
 import axios from '../../services/axios';
 
@@ -10,11 +10,11 @@ import { Container, MessageContent } from './styles';
 import Box from '../../components/Box';
 import Button from '../../components/Button';
 
-interface Message { 
+interface Message {
   _id: string;
   subject: string;
   sentAt: string;
-  finalBody: string; 
+  finalBody: string;
   recipientsCount: number;
   sentCount: number;
   sentAtFormatted?: string;
@@ -25,14 +25,14 @@ interface Message {
   sender: {
     name: string;
     email: string;
-  }
+  };
 }
 
 interface RouteParams {
   id: string;
 }
 
-interface Props extends RouteComponentProps<RouteParams> {}
+type Props = RouteComponentProps<RouteParams>;
 
 const MessageForm: React.FC<Props> = ({ match }) => {
   const { id } = match.params;
@@ -50,7 +50,7 @@ const MessageForm: React.FC<Props> = ({ match }) => {
       ...data,
       sentAtFormatted: data.sentAt
         ? format(parseISO(data.sentAt), "dd/MM/yyyy HH:mm'h'")
-        : 'Não enviada'
+        : 'Não enviada',
     };
   }, [data]);
 
@@ -58,9 +58,7 @@ const MessageForm: React.FC<Props> = ({ match }) => {
     try {
       const response = await axios.post(`/messages/${id}/send`);
 
-      mutate(requestKey, response, false); 
-
-      console.log('mutate called')
+      mutate(requestKey, response, false);
     } catch (err) {
       alert('Erro ao enviar mensagem');
     }
@@ -76,13 +74,17 @@ const MessageForm: React.FC<Props> = ({ match }) => {
           </Button>
         )}
       </header>
-      { message ? (
+      {message ? (
         <Box>
           <strong>ASSUNTO</strong>
           <h2>{message.subject}</h2>
 
           <strong>REMETENTE</strong>
-          <h3>{message.sender ? `${message.sender.name} - ${message.sender.email}` : 'Padrão'}</h3>
+          <h3>
+            {message.sender
+              ? `${message.sender.name} - ${message.sender.email}`
+              : 'Padrão'}
+          </h3>
 
           <strong>RECIPIENTES</strong>
           <h3>{message.recipientsCount}</h3>
@@ -94,13 +96,15 @@ const MessageForm: React.FC<Props> = ({ match }) => {
           <h3>{message.sentAtFormatted}</h3>
 
           <strong>CONTEÚDO</strong>
-          <MessageContent dangerouslySetInnerHTML={{ __html: message.finalBody }} />
+          <MessageContent
+            dangerouslySetInnerHTML={{ __html: message.finalBody }}
+          />
         </Box>
       ) : (
         <p>Carregando...</p>
-      ) }
+      )}
     </Container>
   );
-}
+};
 
 export default MessageForm;

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   height: 100vh;
   width: 240px;
-  background: #15121E;
+  background: #15121e;
   border-right: 1px solid #252131;
 
   display: flex;
@@ -29,7 +29,7 @@ export const Nav = styled.nav`
     font-size: 13px;
 
     &.active {
-      color: #FFF;
+      color: #fff;
     }
 
     &::before {

@@ -4,7 +4,7 @@ import { shade } from 'polished';
 
 export const Container = styled.div`
   margin-bottom: 15px;
-  
+
   label {
     display: block;
     margin-bottom: 8px;
@@ -20,7 +20,7 @@ export const Container = styled.div`
   }
 
   > span {
-    color: #CE4A4A;
+    color: #ce4a4a;
     display: block;
     margin-top: 5px;
   }
@@ -29,9 +29,9 @@ export const Container = styled.div`
 export const Select = styled(Creatable)`
   .react-select__control {
     margin-bottom: 10px;
-    background: #15121E;
-    border: 2px solid #15121E;
-    color: #E1E1E6;
+    background: #15121e;
+    border: 2px solid #15121e;
+    color: #e1e1e6;
     padding: 2px 8px;
     border-radius: 4px;
     display: flex;
@@ -54,12 +54,12 @@ export const Select = styled(Creatable)`
   }
 
   .react-select__menu {
-    background: #15121E;
-    border: 2px solid #15121E;
+    background: #15121e;
+    border: 2px solid #15121e;
   }
 
   .react-select__option {
-    background: #201B2D;
+    background: #201b2d;
 
     padding: 10px 15px;
 
@@ -77,11 +77,11 @@ export const Select = styled(Creatable)`
   }
 
   .react-select__single-value {
-    color: #E1E1E6;
+    color: #e1e1e6;
   }
 
   .react-select__multi-value__label {
-    color: #E1E1E6;
+    color: #e1e1e6;
     font-family: Roboto;
     font-weight: bold;
     font-size: 10px;
@@ -89,15 +89,15 @@ export const Select = styled(Creatable)`
   }
 
   .react-select__multi-value__remove {
-    color: #E1E1E6;
+    color: #e1e1e6;
 
     &:hover {
       background: ${props => shade(0.1, '#252131')};
-      color: #E1E1E6;
+      color: #e1e1e6;
     }
   }
 
   .react-select__input input {
-    color: #E1E1E6;
+    color: #e1e1e6;
   }
 `;

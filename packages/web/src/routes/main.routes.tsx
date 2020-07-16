@@ -16,7 +16,7 @@ import SenderList from '../pages/SenderList';
 import SenderForm from '../pages/SenderForm';
 
 const Routes = () => {
-  return ( 
+  return (
     <Switch>
       <Route path="/" exact component={SignIn} />
 
@@ -24,17 +24,32 @@ const Routes = () => {
 
       <Route isPrivate path="/messages" exact component={MessageList} />
       <Route isPrivate path="/messages/create" exact component={MessageForm} />
-      <Route isPrivate path="/messages/show/:id" exact component={MessageDetail} />
+      <Route
+        isPrivate
+        path="/messages/show/:id"
+        exact
+        component={MessageDetail}
+      />
 
       <Route isPrivate path="/templates" exact component={TemplateList} />
-      <Route isPrivate path="/templates/create" exact component={TemplateForm} />
-      <Route isPrivate path="/templates/edit/:id" exact component={TemplateForm} />
+      <Route
+        isPrivate
+        path="/templates/create"
+        exact
+        component={TemplateForm}
+      />
+      <Route
+        isPrivate
+        path="/templates/edit/:id"
+        exact
+        component={TemplateForm}
+      />
 
       <Route isPrivate path="/senders" exact component={SenderList} />
       <Route isPrivate path="/senders/create" exact component={SenderForm} />
       <Route isPrivate path="/senders/edit/:id" exact component={SenderForm} />
     </Switch>
   );
-}
+};
 
 export default Routes;

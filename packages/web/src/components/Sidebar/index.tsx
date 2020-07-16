@@ -1,9 +1,9 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
+import { MdAccountCircle } from 'react-icons/md';
 import { Container, Nav, Profile } from './styles';
 import logo from '../../assets/logo-u.svg';
-import { MdAccountCircle } from 'react-icons/md'
 
 const Sidebar: React.FC = () => {
   return (
@@ -23,6 +23,6 @@ const Sidebar: React.FC = () => {
       </Profile>
     </Container>
   );
-}
+};
 
 export default Sidebar;

@@ -2,8 +2,8 @@ import styled, { css } from 'styled-components';
 import { shade, tint } from 'polished';
 
 interface Props {
-  size?: "small" | "default" | "big";
-  color?: "primary" | "secundary" | "cancel" | "danger";
+  size?: 'small' | 'default' | 'big';
+  color?: 'primary' | 'secundary' | 'cancel' | 'danger';
   loading?: boolean;
   inline?: boolean;
 }
@@ -26,23 +26,23 @@ const sizes = {
 const colors = {
   primary: css`
     background: #7159c1;
-    color: #FFF;
+    color: #fff;
 
     &:hover {
       background: ${shade(0.1, '#7159c1')};
     }
   `,
   secundary: css`
-    background: #FF79C6;
-    color: #FFF;
+    background: #ff79c6;
+    color: #fff;
 
     &:hover {
       background: ${shade(0.1, '#FF79C6')};
     }
   `,
   danger: css`
-    background: #E96379;
-    color: #FFF;
+    background: #e96379;
+    color: #fff;
 
     &:hover {
       background: ${shade(0.1, '#E96379')};
@@ -63,7 +63,7 @@ const colors = {
 
 const ButtonStyled = styled.button.attrs<Props>(props => ({
   disabled: props.disabled || !!props.loading,
-  loading: !!props.loading ? 1 : 0,
+  loading: props.loading ? 1 : 0,
 }))<Props>``;
 
 export default styled(ButtonStyled)`
@@ -74,7 +74,7 @@ export default styled(ButtonStyled)`
   color: #fff;
   text-transform: uppercase;
   cursor: pointer;
-  display: ${props => props.inline ? 'inline-block' : 'flex'};
+  display: ${props => (props.inline ? 'inline-block' : 'flex')};
   align-items: center;
   justify-content: center;
   transition: background-color 0.2s, color 0.2s;
@@ -88,6 +88,6 @@ export default styled(ButtonStyled)`
     margin-right: 5px;
   }
 
-  ${props => props.size ? sizes[props.size] : sizes['default']}
-  ${props => props.color ? colors[props.color] : colors['primary']}
+  ${props => (props.size ? sizes[props.size] : sizes.default)}
+  ${props => (props.color ? colors[props.color] : colors.primary)}
 `;

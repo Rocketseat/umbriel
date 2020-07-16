@@ -1,6 +1,6 @@
 import React, { useRef, useCallback, useState } from 'react';
-import axios from '../../../services/axios';
 import { OptionTypeBase } from 'react-select';
+import axios from '../../../services/axios';
 
 import Button from '../../../components/Button';
 
@@ -19,12 +19,12 @@ const Import: React.FC<Props> = ({ closeModal }) => {
   const [loading, setLoading] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
-  const loadTags = useCallback(async (search) => {
+  const loadTags = useCallback(async search => {
     await new Promise(resolve => setTimeout(resolve, 800));
 
     const response = await axios.get<Tag[]>('/tags', {
       params: { search },
-    })
+    });
 
     return response.data.map(tag => ({
       value: tag.title,
@@ -32,38 +32,41 @@ const Import: React.FC<Props> = ({ closeModal }) => {
     }));
   }, []);
 
-  const handleImport = useCallback(async (e) => {
-    e.preventDefault();
-    
-    setLoading(true);
+  const handleImport = useCallback(
+    async e => {
+      e.preventDefault();
 
-    try {
-      const selectedTags = tags.map(tag => tag.value).join(', ');
-      const file = fileRef.current?.files?.[0];
+      setLoading(true);
 
-      if (!selectedTags) {
-        return;
+      try {
+        const selectedTags = tags.map(tag => tag.value).join(', ');
+        const file = fileRef.current?.files?.[0];
+
+        if (!selectedTags) {
+          return;
+        }
+
+        if (!file) {
+          return;
+        }
+
+        const formData = new FormData();
+
+        formData.append('tags', selectedTags);
+        formData.append('file', file);
+
+        await new Promise(resolve => setTimeout(resolve, 2000));
+
+        await axios.post('/contacts/import', formData);
+
+        closeModal();
+      } catch (err) {
+        setLoading(false);
+        alert('Erro ao realizar importação de contatos');
       }
-
-      if (!file) {
-        return;
-      }
-
-      const formData = new FormData();
-
-      formData.append('tags', selectedTags);
-      formData.append('file', file);
-
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
-      await axios.post('/contacts/import', formData);
-      
-      closeModal();
-    } catch (err) {
-      setLoading(false);
-      alert('Erro ao realizar importação de contatos');
-    }
-  }, [closeModal, tags]);
+    },
+    [closeModal, tags],
+  );
 
   return (
     <Container>
@@ -72,26 +75,35 @@ const Import: React.FC<Props> = ({ closeModal }) => {
       <form onSubmit={handleImport}>
         <label htmlFor="tags">Tags</label>
         <span>Você pode criar novas tags</span>
-        <Select 
+        <Select
           isMulti
           loadOptions={loadTags}
           classNamePrefix="react-select"
           placeholder="Selecione as tags..."
           cacheOptions
           defaultOptions
-          loadingMessage={() => "Carregando tags..."}
+          loadingMessage={() => 'Carregando tags...'}
           formatCreateLabel={(value: string) => `Criar tag "${value}"`}
           value={tags}
           onChange={setTags}
         />
 
         <label htmlFor="file">Arquivo CSV</label>
-        <input required accept=".csv" ref={fileRef} type="file" name="file" id="file" />
+        <input
+          required
+          accept=".csv"
+          ref={fileRef}
+          type="file"
+          name="file"
+          id="file"
+        />
 
-        <Button loading={loading} size="big" type="submit">Realizar importação</Button>
+        <Button loading={loading} size="big" type="submit">
+          Realizar importação
+        </Button>
       </form>
     </Container>
   );
-}
+};
 
 export default Import;

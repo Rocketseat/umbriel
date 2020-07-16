@@ -11,6 +11,6 @@ const DefaultLayout: React.FC = ({ children }) => {
       <GlobalStyle />
     </>
   );
-}
+};
 
 export default DefaultLayout;

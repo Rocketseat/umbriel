@@ -8,12 +8,18 @@ interface Props<Multiline = false> {
   note?: string;
   name: string;
   multiline?: Multiline;
-};
+}
 
 type InputProps = JSX.IntrinsicElements['input'] & Props<false>;
 type TextAreaProps = JSX.IntrinsicElements['textarea'] & Props<true>;
 
-const Input: React.FC<InputProps | TextAreaProps> = ({ label, note, name, multiline, ...rest }) => {
+const Input: React.FC<InputProps | TextAreaProps> = ({
+  label,
+  note,
+  name,
+  multiline,
+  ...rest
+}) => {
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
   const { fieldName, defaultValue, registerField, error } = useField(name);
 
@@ -22,7 +28,7 @@ const Input: React.FC<InputProps | TextAreaProps> = ({ label, note, name, multil
       name: fieldName,
       path: 'value',
       ref: inputRef.current,
-    })
+    });
   }, [fieldName, registerField]);
 
   const props = {
@@ -35,16 +41,16 @@ const Input: React.FC<InputProps | TextAreaProps> = ({ label, note, name, multil
 
   return (
     <Container>
-      { label && <label htmlFor={fieldName}>{label}</label> }
-      { note && <small>{note}</small> }
+      {label && <label htmlFor={fieldName}>{label}</label>}
+      {note && <small>{note}</small>}
 
       {multiline ? (
-        <textarea {...props as TextAreaProps} />
+        <textarea {...(props as TextAreaProps)} />
       ) : (
-        <input {...props as InputProps} />
+        <input {...(props as InputProps)} />
       )}
 
-      { error && <span>{error}</span> }
+      {error && <span>{error}</span>}
     </Container>
   );
 };
