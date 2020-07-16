@@ -6,7 +6,7 @@ interface TagProps {
 
 export default styled.span<TagProps>`
   background: ${props => props.color || '#FF79C6'};
-  color: #FFF;
+  color: #fff;
   padding: 4px 6px;
   border-radius: 3px;
   font-size: 10px;

@@ -6,19 +6,24 @@ const api = axios.create({
 });
 
 api.interceptors.request.use(config => {
-  config.headers.authorization = `Bearer ${localStorage.getItem('@Umbriel:token')}`;
+  config.headers.authorization = `Bearer ${localStorage.getItem(
+    '@Umbriel:token',
+  )}`;
 
   return config;
 });
 
-api.interceptors.response.use(config => config, error => {
-  const { data } = error.response;
+api.interceptors.response.use(
+  config => config,
+  error => {
+    const { data } = error.response;
 
-  if (data?.code === 'token.expired') {
-    localStorage.clear();
+    if (data?.code === 'token.expired') {
+      localStorage.clear();
 
-    history.push('/');
-  }
-});
+      history.push('/');
+    }
+  },
+);
 
 export default api;

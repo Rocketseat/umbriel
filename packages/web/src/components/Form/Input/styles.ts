@@ -17,25 +17,26 @@ export const Container = styled.div`
     opacity: 0.6;
   }
 
-  > input, > textarea {
+  > input,
+  > textarea {
     display: block;
     resize: vertical;
     margin-top: 3px;
-    background: #15121E;
-    border: 2px solid #15121E;
-    color: #E1E1E6;
+    background: #15121e;
+    border: 2px solid #15121e;
+    color: #e1e1e6;
     border-radius: 4px;
     padding: 12px 15px;
     width: 100%;
-    transition: border-color .2s;
-  
+    transition: border-color 0.2s;
+
     &:focus {
       border-color: #7159c1;
     }
 
     &[disabled] {
       cursor: not-allowed;
-      background: #201B2D;
+      background: #201b2d;
     }
   }
 
@@ -44,7 +45,7 @@ export const Container = styled.div`
   }
 
   > span {
-    color: #CE4A4A;
+    color: #ce4a4a;
     display: block;
     margin-top: 5px;
   }

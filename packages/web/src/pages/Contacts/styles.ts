@@ -22,12 +22,12 @@ export const Container = styled.main`
 
       input {
         margin-right: 5px;
-        background: #15121E;
-        border: 2px solid #15121E;
-        color: #E1E1E6;
+        background: #15121e;
+        border: 2px solid #15121e;
+        color: #e1e1e6;
         border-radius: 4px;
         padding: 5px 12px;
-        transition: border-color .2s;
+        transition: border-color 0.2s;
         font-size: 14px;
 
         &:focus {
@@ -37,5 +37,3 @@ export const Container = styled.main`
     }
   }
 `;
-
-

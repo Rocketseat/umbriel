@@ -11,4 +11,3 @@ export const Container = styled.main`
     margin-bottom: 15px;
   }
 `;
-

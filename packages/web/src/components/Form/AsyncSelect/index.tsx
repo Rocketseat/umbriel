@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { OptionTypeBase } from 'react-select';
-import { Props as AsyncProps } from 'react-select/async'
+import { Props as AsyncProps } from 'react-select/async';
 import { useField } from '@unform/core';
 
 import { Container, Select } from './styles';
@@ -26,22 +26,23 @@ const AsyncSelect: React.FC<Props> = ({ name, label, note, ...rest }) => {
             return [];
           }
 
-          return ref.select.state.value.map((option: OptionTypeBase) => option.value);
-        } else {
-          if (!ref.select.state.value) {
-            return '';
-          }
-
-          return ref.select.state.value.value;
+          return ref.select.state.value.map(
+            (option: OptionTypeBase) => option.value,
+          );
         }
-      }
+        if (!ref.select.state.value) {
+          return '';
+        }
+
+        return ref.select.state.value.value;
+      },
     });
   }, [fieldName, registerField, rest.isMulti]);
 
   return (
     <Container>
-      { label && <label htmlFor={fieldName}>{label}</label> }
-      { note && <small>{note}</small> }
+      {label && <label htmlFor={fieldName}>{label}</label>}
+      {note && <small>{note}</small>}
 
       <Select
         cacheOptions
@@ -52,7 +53,7 @@ const AsyncSelect: React.FC<Props> = ({ name, label, note, ...rest }) => {
         theme={undefined}
       />
 
-      { error && <span>{error}</span> }
+      {error && <span>{error}</span>}
     </Container>
   );
 };

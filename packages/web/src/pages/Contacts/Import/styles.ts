@@ -30,13 +30,13 @@ export const Container = styled.div`
       display: block;
       margin-bottom: 10px;
       margin-top: 3px;
-      background: #15121E;
-      border: 2px solid #15121E;
-      color: #E1E1E6;
+      background: #15121e;
+      border: 2px solid #15121e;
+      color: #e1e1e6;
       border-radius: 4px;
       padding: 12px 15px;
       width: 100%;
-      transition: border-color .2s;
+      transition: border-color 0.2s;
 
       &:focus {
         border-color: #7159c1;
@@ -53,9 +53,9 @@ export const Container = styled.div`
 export const Select = styled(Creatable)`
   .react-select__control {
     margin-bottom: 10px;
-    background: #15121E;
-    border: 2px solid #15121E;
-    color: #E1E1E6;
+    background: #15121e;
+    border: 2px solid #15121e;
+    color: #e1e1e6;
     padding: 2px 8px;
     border-radius: 4px;
     display: flex;
@@ -78,12 +78,12 @@ export const Select = styled(Creatable)`
   }
 
   .react-select__menu {
-    background: #15121E;
-    border: 2px solid #15121E;
+    background: #15121e;
+    border: 2px solid #15121e;
   }
 
   .react-select__option {
-    background: #201B2D;
+    background: #201b2d;
 
     padding: 10px 15px;
 
@@ -118,6 +118,6 @@ export const Select = styled(Creatable)`
   }
 
   .react-select__input input {
-    color: #E1E1E6;
+    color: #e1e1e6;
   }
 `;

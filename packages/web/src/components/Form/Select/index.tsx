@@ -26,21 +26,20 @@ const AsyncSelect: React.FC<Props> = ({ name, label, note, ...rest }) => {
           }
 
           return ref.state.value.map((option: OptionTypeBase) => option.value);
-        } else {
-          if (!ref.state.value) {
-            return '';
-          }
-
-          return ref.state.value.value;
         }
-      }
+        if (!ref.state.value) {
+          return '';
+        }
+
+        return ref.state.value.value;
+      },
     });
   }, [fieldName, registerField, rest.isMulti]);
 
   return (
     <Container>
-      { label && <label htmlFor={fieldName}>{label}</label> }
-      { note && <small>{note}</small> }
+      {label && <label htmlFor={fieldName}>{label}</label>}
+      {note && <small>{note}</small>}
 
       <Select
         defaultValue={defaultValue}
@@ -50,7 +49,7 @@ const AsyncSelect: React.FC<Props> = ({ name, label, note, ...rest }) => {
         theme={undefined}
       />
 
-      { error && <span>{error}</span> }
+      {error && <span>{error}</span>}
     </Container>
   );
 };

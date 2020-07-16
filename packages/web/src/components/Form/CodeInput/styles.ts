@@ -25,13 +25,13 @@ export const Container = styled.div`
     margin-bottom: 15px;
     resize: vertical;
     margin-top: 3px;
-    background: #15121E;
-    border: 2px solid #15121E;
-    color: #FFF;
+    background: #15121e;
+    border: 2px solid #15121e;
+    color: #fff;
     border-radius: 4px;
     padding: 12px 15px;
     width: 100%;
-    transition: border-color .2s;
+    transition: border-color 0.2s;
     font-size: 16px;
     line-height: 24px;
     font-family: 'Fira Code';
@@ -50,14 +50,15 @@ export const Container = styled.div`
       font-weight: 100;
     }
 
-    textarea, pre {
+    textarea,
+    pre {
       outline: none;
       padding-left: 60px !important;
     }
   }
 
   > span {
-    color: #CE4A4A;
+    color: #ce4a4a;
     display: block;
     margin-top: 5px;
   }

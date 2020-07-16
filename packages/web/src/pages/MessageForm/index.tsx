@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { OptionTypeBase } from 'react-select';
-import { FormHandles } from '@unform/core'
+import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 import axios from '../../services/axios';
 
@@ -30,7 +30,7 @@ interface RouteParams {
   id: string;
 }
 
-interface Props extends RouteComponentProps<RouteParams> {}
+type Props = RouteComponentProps<RouteParams>;
 
 const MessageForm: React.FC<Props> = ({ history, match }) => {
   const formRef = useRef<FormHandles>(null);
@@ -55,45 +55,48 @@ const MessageForm: React.FC<Props> = ({ history, match }) => {
     history.push('/messages');
   }, [history]);
 
-  const handleCreateMessage = useCallback(async (data) => {
-    try {
-      setLoading(true);
+  const handleCreateMessage = useCallback(
+    async data => {
+      try {
+        setLoading(true);
 
-      const schema = Yup.object().shape({
-        subject: Yup.string().required('O assunto é obrigatório'),
-        tags: Yup.array(Yup.string()).required('Selecione no mínimo uma tag'),
-        sender: Yup.string().required('O remetente é obrigatório'),
-        template: Yup.string().required('O template é obrigatório'),
-        body: Yup.string().required('O conteúdo da mensagem é obrigatório'),
-      });
-
-      await schema.validate(data, {
-        abortEarly: false,
-      });
-
-      await axios.post('/messages', data);
-
-      navigateToList();
-    } catch (err) {
-      setLoading(false);
-      const validationErrors: { [key: string]: string } = {};
-
-      if (err instanceof Yup.ValidationError) {
-        err.inner.forEach((error: Yup.ValidationError) => {
-          validationErrors[error.path] = error.message;
+        const schema = Yup.object().shape({
+          subject: Yup.string().required('O assunto é obrigatório'),
+          tags: Yup.array(Yup.string()).required('Selecione no mínimo uma tag'),
+          sender: Yup.string().required('O remetente é obrigatório'),
+          template: Yup.string().required('O template é obrigatório'),
+          body: Yup.string().required('O conteúdo da mensagem é obrigatório'),
         });
 
-        formRef.current?.setErrors(validationErrors);
-      } else {
-        alert('Falha para cadastrar mensagem!');
-      }
-    }
-  }, [navigateToList]);
+        await schema.validate(data, {
+          abortEarly: false,
+        });
 
-  const loadTags = useCallback(async (search) => {
+        await axios.post('/messages', data);
+
+        navigateToList();
+      } catch (err) {
+        setLoading(false);
+        const validationErrors: { [key: string]: string } = {};
+
+        if (err instanceof Yup.ValidationError) {
+          err.inner.forEach((error: Yup.ValidationError) => {
+            validationErrors[error.path] = error.message;
+          });
+
+          formRef.current?.setErrors(validationErrors);
+        } else {
+          alert('Falha para cadastrar mensagem!');
+        }
+      }
+    },
+    [navigateToList],
+  );
+
+  const loadTags = useCallback(async search => {
     const response = await axios.get<Tag[]>('/tags', {
       params: { search },
-    })
+    });
 
     return response.data.map(tag => ({
       value: tag._id,
@@ -101,10 +104,10 @@ const MessageForm: React.FC<Props> = ({ history, match }) => {
     }));
   }, []);
 
-  const loadTemplates = useCallback(async (search) => {
+  const loadTemplates = useCallback(async search => {
     const response = await axios.get<Template[]>('/templates', {
       params: { search },
-    })
+    });
 
     return response.data.map(template => ({
       value: template._id,
@@ -112,10 +115,10 @@ const MessageForm: React.FC<Props> = ({ history, match }) => {
     }));
   }, []);
 
-  const loadSenders = useCallback(async (search) => {
+  const loadSenders = useCallback(async search => {
     const response = await axios.get<Sender[]>('/senders', {
       params: { search },
-    })
+    });
 
     return response.data.map(sender => ({
       value: sender._id,
@@ -123,12 +126,15 @@ const MessageForm: React.FC<Props> = ({ history, match }) => {
     }));
   }, []);
 
-  const handleCountRecipients = useCallback(async (value) => {
+  const handleCountRecipients = useCallback(async value => {
     const tags = value.map((tag: OptionTypeBase) => tag.value).join(',');
 
-    const response = await axios.get<{ recipients: number }>('/tags/recipients', {
-      params: { tags },
-    });
+    const response = await axios.get<{ recipients: number }>(
+      '/tags/recipients',
+      {
+        params: { tags },
+      },
+    );
 
     setRecipients(response.data.recipients);
   }, []);
@@ -136,24 +142,27 @@ const MessageForm: React.FC<Props> = ({ history, match }) => {
   return (
     <Container>
       <header>
-        <h1>Criar mensagem</h1> 
-        <Button color="cancel" onClick={navigateToList}>Cancelar</Button>
+        <h1>Criar mensagem</h1>
+        <Button color="cancel" onClick={navigateToList}>
+          Cancelar
+        </Button>
       </header>
       <Box>
         <Form ref={formRef} onSubmit={handleCreateMessage}>
-          <Input
-            label="Assunto"
-            name="subject"
-          />
+          <Input label="Assunto" name="subject" />
 
           <AsyncSelect
             label="Tags"
             name="tags"
-            note={recipients ? `Total de ${recipients} recipientes.` : 'Selecione as tags para calcular'}
+            note={
+              recipients
+                ? `Total de ${recipients} recipientes.`
+                : 'Selecione as tags para calcular'
+            }
             isMulti
             placeholder="Selecione as tags..."
             defaultOptions
-            loadingMessage={() => "Carregando tags..."}
+            loadingMessage={() => 'Carregando tags...'}
             loadOptions={loadTags}
             onChange={handleCountRecipients}
           />
@@ -163,7 +172,7 @@ const MessageForm: React.FC<Props> = ({ history, match }) => {
             name="template"
             placeholder="Selecione o template"
             defaultOptions
-            loadingMessage={() => "Buscando templates..."}
+            loadingMessage={() => 'Buscando templates...'}
             loadOptions={loadTemplates}
           />
 
@@ -172,20 +181,19 @@ const MessageForm: React.FC<Props> = ({ history, match }) => {
             name="sender"
             placeholder="Selecione o remetente"
             defaultOptions
-            loadingMessage={() => "Buscando remetentes..."}
+            loadingMessage={() => 'Buscando remetentes...'}
             loadOptions={loadSenders}
           />
 
-          <CodeInput
-            label="Conteúdo"
-            name="body"
-          />          
+          <CodeInput label="Conteúdo" name="body" />
 
-          <Button loading={loading} size="big" type="submit">Salvar mensagem</Button>
+          <Button loading={loading} size="big" type="submit">
+            Salvar mensagem
+          </Button>
         </Form>
       </Box>
     </Container>
   );
-}
+};
 
 export default MessageForm;

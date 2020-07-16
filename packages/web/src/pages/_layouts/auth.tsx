@@ -8,6 +8,6 @@ const AuthLayout: React.FC = ({ children }) => {
       <GlobalStyle />
     </>
   );
-}
+};
 
 export default AuthLayout;
