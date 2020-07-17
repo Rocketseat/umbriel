@@ -1,8 +1,10 @@
 import { Readable } from 'stream';
+
+import Contact from '@modules/contacts/infra/mongoose/schemas/Contact';
+import Tag from '@modules/contacts/infra/mongoose/schemas/Tag';
+
 import MongoMock from '@shared/tests/MongoMock';
 
-import Tag from '@modules/contacts/infra/mongoose/schemas/Tag';
-import Contact from '@modules/contacts/infra/mongoose/schemas/Contact';
 import ChangeContactSubscriptionStatusService from './ChangeContactSubscriptionStatusService';
 
 describe('Change Contact Subscription Status', () => {

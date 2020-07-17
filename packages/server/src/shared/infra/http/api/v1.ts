@@ -4,8 +4,8 @@ import contactRouter from '@modules/contacts/infra/http/routes/contact';
 import tagRouter from '@modules/contacts/infra/http/routes/tag';
 import messageRouter from '@modules/messages/infra/http/routes/message';
 import templateRouter from '@modules/messages/infra/http/routes/template';
-import sessionRouter from '@modules/users/infra/http/routes/session';
 import senderRouter from '@modules/senders/infra/http/routes/sender';
+import sessionRouter from '@modules/users/infra/http/routes/session';
 
 const v1Router = Router();
 

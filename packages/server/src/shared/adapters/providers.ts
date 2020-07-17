@@ -1,9 +1,7 @@
-import SESProvider from './implementations/mail/SESProvider';
-import MailtrapProvider from './implementations/mail/MailtrapProvider';
-import FakeProvider from './implementations/mail/FakeProvider';
-
 import WinstonProvider from './implementations/logger/WinstonProvider';
-
+import FakeProvider from './implementations/mail/FakeProvider';
+import MailtrapProvider from './implementations/mail/MailtrapProvider';
+import SESProvider from './implementations/mail/SESProvider';
 import BullProvider from './implementations/queue/BullProvider';
 
 const providers = {

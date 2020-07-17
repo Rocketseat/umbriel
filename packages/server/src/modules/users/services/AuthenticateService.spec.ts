@@ -1,10 +1,10 @@
-import MongoMock from '@shared/tests/MongoMock';
-import { container } from 'tsyringe';
 import bcrypt from 'bcryptjs';
-
-import AuthenticateService from '@modules/users/services/AuthenticateService';
+import { container } from 'tsyringe';
 
 import User from '@modules/users/infra/mongoose/schemas/User';
+import AuthenticateService from '@modules/users/services/AuthenticateService';
+
+import MongoMock from '@shared/tests/MongoMock';
 
 describe('Add Recipients to Queue', () => {
   beforeAll(async () => {

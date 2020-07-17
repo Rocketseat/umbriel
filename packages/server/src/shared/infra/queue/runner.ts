@@ -1,14 +1,14 @@
 import 'dotenv/config';
 import 'reflect-metadata';
 import * as Sentry from '@sentry/node';
-import sentryConfig from '@config/sentry';
-
 import { container } from 'tsyringe';
 
 import '@shared/adapters';
 import '@shared/infra/mongoose/connection';
 
 import ProcessQueueService from '@modules/messages/services/ProcessQueueService';
+
+import sentryConfig from '@config/sentry';
 
 Sentry.init({ dsn: sentryConfig.dsn });
 

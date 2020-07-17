@@ -1,5 +1,6 @@
 import { LoggerOptions, format, transports } from 'winston';
 import { MongoDB } from 'winston-mongodb';
+
 import mongoConfig from '@config/mongo';
 
 const mongoUserPass = mongoConfig.username

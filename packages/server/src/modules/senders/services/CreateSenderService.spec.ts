@@ -1,8 +1,7 @@
-import MongoMock from '@shared/tests/MongoMock';
-
+import Sender from '@modules/senders/infra/mongoose/schemas/Sender';
 import CreateSenderService from '@modules/senders/services/CreateSenderService';
 
-import Sender from '@modules/senders/infra/mongoose/schemas/Sender';
+import MongoMock from '@shared/tests/MongoMock';
 
 describe('Create Sender', () => {
   beforeAll(async () => {
