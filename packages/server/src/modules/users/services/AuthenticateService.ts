@@ -1,11 +1,12 @@
-import { injectable } from 'tsyringe';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { injectable } from 'tsyringe';
+
+import User, { UserDocument } from '@modules/users/infra/mongoose/schemas/User';
+
 import authConfig from '@config/auth';
 
 import Service from '@shared/core/Service';
-
-import User, { UserDocument } from '@modules/users/infra/mongoose/schemas/User';
 
 interface Request {
   email: string;

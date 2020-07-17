@@ -1,13 +1,13 @@
 import express from 'express';
 import { container } from 'tsyringe';
 
-import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated';
-
 import CreateSenderService from '@modules/senders/services/CreateSenderService';
-import SearchSendersService from '@modules/senders/services/SearchSendersService';
-import GetSenderService from '@modules/senders/services/GetSenderService';
-import UpdateSenderService from '@modules/senders/services/UpdateSenderService';
 import DeleteSenderService from '@modules/senders/services/DeleteSenderService';
+import GetSenderService from '@modules/senders/services/GetSenderService';
+import SearchSendersService from '@modules/senders/services/SearchSendersService';
+import UpdateSenderService from '@modules/senders/services/UpdateSenderService';
+
+import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated';
 
 const senderRouter = express.Router();
 

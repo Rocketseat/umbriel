@@ -1,12 +1,12 @@
-import MongoMock from '@shared/tests/MongoMock';
 import { container } from 'tsyringe';
 
-import ProcessQueueService from '@modules/messages/services/ProcessQueueService';
-
-import Message from '@modules/messages/infra/mongoose/schemas/Message';
 import Contact from '@modules/contacts/infra/mongoose/schemas/Contact';
 import Tag from '@modules/contacts/infra/mongoose/schemas/Tag';
+import Message from '@modules/messages/infra/mongoose/schemas/Message';
 import Recipient from '@modules/messages/infra/mongoose/schemas/Recipient';
+import ProcessQueueService from '@modules/messages/services/ProcessQueueService';
+
+import MongoMock from '@shared/tests/MongoMock';
 
 describe('Add Recipients to Queue', () => {
   beforeAll(async () => {

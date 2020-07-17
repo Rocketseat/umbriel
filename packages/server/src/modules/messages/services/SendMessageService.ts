@@ -1,15 +1,14 @@
 import { injectable, inject } from 'tsyringe';
 
 import Contact from '@modules/contacts/infra/mongoose/schemas/Contact';
-import Recipient from '@modules/messages/infra/mongoose/schemas/Recipient';
 import Message, {
   MessageDocument,
 } from '@modules/messages/infra/mongoose/schemas/Message';
+import Recipient from '@modules/messages/infra/mongoose/schemas/Recipient';
 
-import Service from '@shared/core/Service';
-
-import QueueProvider from '@shared/adapters/models/QueueProvider';
 import LoggerProvider from '@shared/adapters/models/LoggerProvider';
+import QueueProvider from '@shared/adapters/models/QueueProvider';
+import Service from '@shared/core/Service';
 
 type Request = string;
 type Response = MessageDocument;

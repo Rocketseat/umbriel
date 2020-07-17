@@ -1,8 +1,7 @@
-import MongoMock from '@shared/tests/MongoMock';
-
+import Template from '@modules/messages/infra/mongoose/schemas/Template';
 import CreateTemplateService from '@modules/messages/services/CreateTemplateService';
 
-import Template from '@modules/messages/infra/mongoose/schemas/Template';
+import MongoMock from '@shared/tests/MongoMock';
 
 describe('Create Message', () => {
   beforeAll(async () => {

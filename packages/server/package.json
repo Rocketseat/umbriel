@@ -9,7 +9,8 @@
     "build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./dist && copyfiles -u 1 src/**/*.html dist",
     "start:server": "node dist/shared/infra/http/server.js",
     "start:queue": "node dist/shared/infra/queue/runner.js",
-    "test": "jest --runInBand"
+    "test": "jest --runInBand",
+    "lint": "eslint src --ext ts"
   },
   "engines": {
     "node": ">=12.3.1"
@@ -57,6 +58,7 @@
     "eslint-config-prettier": "^6.9.0",
     "eslint-import-resolver-typescript": "^2.0.0",
     "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-import-helpers": "^1.1.0",
     "eslint-plugin-prettier": "^3.1.2",
     "ioredis": "^4.14.1",
     "jest": "^24.9.0",

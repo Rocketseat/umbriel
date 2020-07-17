@@ -1,11 +1,12 @@
-import MongoMock from '@shared/tests/MongoMock';
 import { container } from 'tsyringe';
 
-import SendMessageService from '@modules/messages/services/SendMessageService';
-
-import Message from '@modules/messages/infra/mongoose/schemas/Message';
 import Contact from '@modules/contacts/infra/mongoose/schemas/Contact';
 import Tag from '@modules/contacts/infra/mongoose/schemas/Tag';
+import Message from '@modules/messages/infra/mongoose/schemas/Message';
+import SendMessageService from '@modules/messages/services/SendMessageService';
+
+import MongoMock from '@shared/tests/MongoMock';
+
 import Recipient from '../infra/mongoose/schemas/Recipient';
 
 describe('Send Message', () => {

@@ -1,6 +1,7 @@
-import Service from '@shared/core/Service';
 import Message from '@modules/messages/infra/mongoose/schemas/Message';
 import Sender from '@modules/senders/infra/mongoose/schemas/Sender';
+
+import Service from '@shared/core/Service';
 
 type Request = string;
 type Response = void;

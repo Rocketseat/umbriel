@@ -1,10 +1,10 @@
-import { Readable } from 'stream';
 import csvParse from 'csv-parse';
+import { Readable } from 'stream';
+
+import Contact from '@modules/contacts/infra/mongoose/schemas/Contact';
+import Tag from '@modules/contacts/infra/mongoose/schemas/Tag';
 
 import Service from '@shared/core/Service';
-
-import Tag from '@modules/contacts/infra/mongoose/schemas/Tag';
-import Contact from '@modules/contacts/infra/mongoose/schemas/Contact';
 
 interface Request {
   contactsFileStream: Readable;
