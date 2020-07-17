@@ -1,4 +1,5 @@
 import Bull, { Queue, QueueOptions, ProcessPromiseFunction } from 'bull';
+
 import QueueProvider from '../../models/QueueProvider';
 
 class BullProvider implements QueueProvider {

@@ -1,10 +1,10 @@
 import { Readable } from 'stream';
-import MongoMock from '@shared/tests/MongoMock';
 
+import Contact from '@modules/contacts/infra/mongoose/schemas/Contact';
+import Tag from '@modules/contacts/infra/mongoose/schemas/Tag';
 import ImportContactsService from '@modules/contacts/services/ImportContactsService';
 
-import Tag from '@modules/contacts/infra/mongoose/schemas/Tag';
-import Contact from '@modules/contacts/infra/mongoose/schemas/Contact';
+import MongoMock from '@shared/tests/MongoMock';
 
 describe('Import Contacts', () => {
   beforeAll(async () => {

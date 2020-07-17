@@ -1,6 +1,6 @@
-import Service from '@shared/core/Service';
-
 import Template from '@modules/messages/infra/mongoose/schemas/Template';
+
+import Service from '@shared/core/Service';
 
 class DeleteTemplateService implements Service<string, void> {
   async execute(id: string): Promise<void> {

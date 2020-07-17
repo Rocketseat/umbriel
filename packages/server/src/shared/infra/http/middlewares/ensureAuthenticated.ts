@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+
 import authConfig from '@config/auth';
+
 import TokenExpiredError from '@shared/errors/TokenExpiredError';
 
 export default function ensureAuthenticated(

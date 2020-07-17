@@ -1,6 +1,6 @@
-import Service from '@shared/core/Service';
-
 import Contact from '@modules/contacts/infra/mongoose/schemas/Contact';
+
+import Service from '@shared/core/Service';
 
 class DeleteContactService implements Service<string, void> {
   async execute(id: string): Promise<void> {

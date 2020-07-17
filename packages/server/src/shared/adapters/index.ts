@@ -1,14 +1,13 @@
 import { container } from 'tsyringe';
 
-import mailConfig from '@config/mail';
 import loggerConfig from '@config/logger';
+import mailConfig from '@config/mail';
 import queueConfig from '@config/queue';
 import redisConfig from '@config/redis';
 
-import MailProvider from './models/MailProvider';
 import LoggerProvider from './models/LoggerProvider';
+import MailProvider from './models/MailProvider';
 import QueueProvider from './models/QueueProvider';
-
 import providers from './providers';
 
 const Mail = providers.mail[mailConfig.driver];

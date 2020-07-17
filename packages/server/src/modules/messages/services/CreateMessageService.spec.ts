@@ -1,9 +1,8 @@
-import MongoMock from '@shared/tests/MongoMock';
-
+import Tag from '@modules/contacts/infra/mongoose/schemas/Tag';
+import Message from '@modules/messages/infra/mongoose/schemas/Message';
 import CreateMessageService from '@modules/messages/services/CreateMessageService';
 
-import Message from '@modules/messages/infra/mongoose/schemas/Message';
-import Tag from '@modules/contacts/infra/mongoose/schemas/Tag';
+import MongoMock from '@shared/tests/MongoMock';
 
 describe('Create Message', () => {
   beforeAll(async () => {
