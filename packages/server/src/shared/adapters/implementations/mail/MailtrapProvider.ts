@@ -1,4 +1,5 @@
 import nodemailer, { Transporter } from 'nodemailer';
+
 import MailProvider from '../../models/MailProvider';
 
 interface Message {

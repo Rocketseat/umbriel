@@ -1,15 +1,14 @@
 import express from 'express';
 import { container } from 'tsyringe';
 
-import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated';
-
 import Template from '@modules/messages/infra/mongoose/schemas/Template';
-
 import CreateTemplateService from '@modules/messages/services/CreateTemplateService';
-import SearchTemplatesService from '@modules/messages/services/SearchTemplatesService';
-import GetTemplateService from '@modules/messages/services/GetTemplateService';
-import UpdateTemplateService from '@modules/messages/services/UpdateTemplateService';
 import DeleteTemplateService from '@modules/messages/services/DeleteTemplateService';
+import GetTemplateService from '@modules/messages/services/GetTemplateService';
+import SearchTemplatesService from '@modules/messages/services/SearchTemplatesService';
+import UpdateTemplateService from '@modules/messages/services/UpdateTemplateService';
+
+import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated';
 
 const templateRouter = express.Router();
 

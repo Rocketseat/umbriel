@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+
 import mongoConfig from '@config/mongo';
 
 const mongoUserPass = mongoConfig.username

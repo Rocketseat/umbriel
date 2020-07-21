@@ -1,5 +1,6 @@
-import { TemplateDocument } from '@modules/messages/infra/mongoose/schemas/Template';
 import beautify from 'js-beautify';
+
+import { TemplateDocument } from '@modules/messages/infra/mongoose/schemas/Template';
 
 import Service from '@shared/core/Service';
 

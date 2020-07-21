@@ -1,6 +1,6 @@
-import Service from '@shared/core/Service';
-
 import Tag, { TagDocument } from '@modules/contacts/infra/mongoose/schemas/Tag';
+
+import Service from '@shared/core/Service';
 
 interface Request {
   search: string;
