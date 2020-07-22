@@ -1,5 +1,6 @@
-import * as Sentry from '@sentry/node';
 import { injectable, inject } from 'tsyringe';
+
+import * as Sentry from '@sentry/node';
 
 import MessageJob from '@modules/messages/dtos/MessageJob';
 import Message from '@modules/messages/infra/mongoose/schemas/Message';

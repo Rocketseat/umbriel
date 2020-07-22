@@ -1,4 +1,5 @@
 import express from 'express';
+
 import { container } from 'tsyringe';
 
 import CreateSenderService from '@modules/senders/services/CreateSenderService';

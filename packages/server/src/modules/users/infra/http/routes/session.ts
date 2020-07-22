@@ -1,4 +1,5 @@
 import express from 'express';
+
 import { container } from 'tsyringe';
 
 import AuthenticateService from '@modules/users/services/AuthenticateService';

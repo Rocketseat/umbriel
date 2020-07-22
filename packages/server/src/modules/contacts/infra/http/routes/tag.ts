@@ -1,4 +1,5 @@
 import express from 'express';
+
 import { container } from 'tsyringe';
 
 import GetRecipientsFromTags from '@modules/contacts/services/GetRecipientsFromTags';

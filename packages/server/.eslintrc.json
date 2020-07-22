@@ -26,10 +26,14 @@
   ],
   "rules": {
     "prettier/prettier": "error",
-    "no-new": "off", 
+    "no-new": "off",
+    "import/no-unresolved": "off",
     "no-underscore-dangle": "off",
     "class-methods-use-this": "off",
     "no-await-in-loop": "off",
+    "no-console": "off",
+    "camelcase": "off",
+    "@typescript-eslint/ban-types": "warn",
     "import/prefer-default-export": "off",
     "import/extensions": [
       "error",
@@ -39,7 +43,7 @@
       }
     ],
     "import/no-extraneous-dependencies": [
-      "error", 
+      "error",
       {
         "devDependencies": [
           "**/*.spec.ts",
@@ -48,7 +52,7 @@
       }
     ],
     "no-useless-constructor": "off",
-    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "_" }],
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "_" }],
     "@typescript-eslint/no-useless-constructor": "error",
     "@typescript-eslint/camelcase": "off",
     "import-helpers/order-imports": [

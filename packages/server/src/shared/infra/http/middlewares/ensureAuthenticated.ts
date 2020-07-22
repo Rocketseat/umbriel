@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+
 import jwt from 'jsonwebtoken';
 
 import authConfig from '@config/auth';

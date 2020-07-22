@@ -1,4 +1,5 @@
 import express from 'express';
+
 import { container } from 'tsyringe';
 
 import Template from '@modules/messages/infra/mongoose/schemas/Template';

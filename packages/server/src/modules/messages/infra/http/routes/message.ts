@@ -1,4 +1,5 @@
 import express from 'express';
+
 import { container } from 'tsyringe';
 
 import Contact from '@modules/contacts/infra/mongoose/schemas/Contact';

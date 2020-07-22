@@ -1,7 +1,8 @@
 import 'dotenv/config';
 import 'reflect-metadata';
-import * as Sentry from '@sentry/node';
 import { container } from 'tsyringe';
+
+import * as Sentry from '@sentry/node';
 
 import '@shared/adapters';
 import '@shared/infra/mongoose/connection';
