@@ -1,10 +1,11 @@
 import express from 'express';
+
 import { container } from 'tsyringe';
 
-import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated';
-
-import SearchTagsService from '@modules/contacts/services/SearchTagsService';
 import GetRecipientsFromTags from '@modules/contacts/services/GetRecipientsFromTags';
+import SearchTagsService from '@modules/contacts/services/SearchTagsService';
+
+import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated';
 
 const tagRouter = express.Router();
 

@@ -1,16 +1,15 @@
 import { injectable, inject } from 'tsyringe';
 
-import Message from '@modules/messages/infra/mongoose/schemas/Message';
-import Recipient from '@modules/messages/infra/mongoose/schemas/Recipient';
 import * as Sentry from '@sentry/node';
 
-import Service from '@shared/core/Service';
-
 import MessageJob from '@modules/messages/dtos/MessageJob';
+import Message from '@modules/messages/infra/mongoose/schemas/Message';
+import Recipient from '@modules/messages/infra/mongoose/schemas/Recipient';
 
-import QueueProvider from '@shared/adapters/models/QueueProvider';
-import MailProvider from '@shared/adapters/models/MailProvider';
 import LoggerProvider from '@shared/adapters/models/LoggerProvider';
+import MailProvider from '@shared/adapters/models/MailProvider';
+import QueueProvider from '@shared/adapters/models/QueueProvider';
+import Service from '@shared/core/Service';
 
 @injectable()
 class ProcessQueueService implements Service<void, void> {

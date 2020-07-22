@@ -1,8 +1,8 @@
-import Service from '@shared/core/Service';
-
 import Contact, {
   ContactDocument,
 } from '@modules/contacts/infra/mongoose/schemas/Contact';
+
+import Service from '@shared/core/Service';
 
 interface Request {
   contact_id: string;

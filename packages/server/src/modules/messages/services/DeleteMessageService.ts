@@ -1,6 +1,6 @@
-import Service from '@shared/core/Service';
-
 import Message from '@modules/messages/infra/mongoose/schemas/Message';
+
+import Service from '@shared/core/Service';
 
 class DeleteMessageService implements Service<string, void> {
   async execute(id: string): Promise<void> {

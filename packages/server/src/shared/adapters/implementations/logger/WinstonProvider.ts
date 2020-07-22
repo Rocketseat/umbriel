@@ -1,4 +1,5 @@
 import { createLogger, LoggerOptions, Logger } from 'winston';
+
 import LoggerProvider from '../../models/LoggerProvider';
 
 class WinstonProvider implements LoggerProvider {

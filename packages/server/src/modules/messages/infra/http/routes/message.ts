@@ -1,19 +1,19 @@
 import express from 'express';
+
 import { container } from 'tsyringe';
 
-import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated';
-
+import Contact from '@modules/contacts/infra/mongoose/schemas/Contact';
 import Message from '@modules/messages/infra/mongoose/schemas/Message';
 import Template from '@modules/messages/infra/mongoose/schemas/Template';
-import Contact from '@modules/contacts/infra/mongoose/schemas/Contact';
+import CreateMessageService from '@modules/messages/services/CreateMessageService';
+import DeleteMessageService from '@modules/messages/services/DeleteMessageService';
+import GetMessageService from '@modules/messages/services/GetMessageService';
+import ParseTemplateService from '@modules/messages/services/ParseTemplateService';
+import SearchMessagesService from '@modules/messages/services/SearchMessagesService';
+import SendMessageService from '@modules/messages/services/SendMessageService';
 import Sender from '@modules/senders/infra/mongoose/schemas/Sender';
 
-import CreateMessageService from '@modules/messages/services/CreateMessageService';
-import ParseTemplateService from '@modules/messages/services/ParseTemplateService';
-import SendMessageService from '@modules/messages/services/SendMessageService';
-import SearchMessagesService from '@modules/messages/services/SearchMessagesService';
-import GetMessageService from '@modules/messages/services/GetMessageService';
-import DeleteMessageService from '@modules/messages/services/DeleteMessageService';
+import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated';
 
 const messageRouter = express.Router();
 

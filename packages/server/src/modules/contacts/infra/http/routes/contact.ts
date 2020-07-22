@@ -1,17 +1,18 @@
 import express from 'express';
+
+import fs from 'fs';
 import multer from 'multer';
 import path from 'path';
-import fs from 'fs';
 import { container } from 'tsyringe';
 
-import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated';
-
+import ChangeContactSubscriptionStatusService from '@modules/contacts/services/ChangeContactSubscriptionStatusService';
+import DeleteContactService from '@modules/contacts/services/DeleteContactService';
 import ImportContactsService from '@modules/contacts/services/ImportContactsService';
+import SearchContactsService from '@modules/contacts/services/SearchContactsService';
 
 import uploadConfig from '@config/upload';
-import ChangeContactSubscriptionStatusService from '@modules/contacts/services/ChangeContactSubscriptionStatusService';
-import SearchContactsService from '@modules/contacts/services/SearchContactsService';
-import DeleteContactService from '@modules/contacts/services/DeleteContactService';
+
+import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated';
 
 const contactRouter = express.Router();
 const upload = multer(uploadConfig.config.multer);
