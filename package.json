@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "lint": "eslint --ext .tsx,.ts, packages/server/src packages/web/src",
+    "tsc": "tsc packages/server/src/**/*.ts packages/web/src/**/*.ts packages/web/src/**/*.tsx --jsx react --noEmit",
+    "test": "packages/server && jest --runInBand"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged --allow-empty",

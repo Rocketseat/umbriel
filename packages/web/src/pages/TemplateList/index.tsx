@@ -75,7 +75,8 @@ const Templates: React.FC<Props> = ({ history }) => {
                   inline
                   size="small"
                   onClick={() =>
-                    history.push(`/templates/edit/${template._id}`)}
+                    history.push(`/templates/edit/${template._id}`)
+                  }
                 >
                   Editar
                 </Button>

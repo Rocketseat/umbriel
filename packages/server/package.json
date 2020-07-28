@@ -10,7 +10,8 @@
     "start:server": "node dist/shared/infra/http/server.js",
     "start:queue": "node dist/shared/infra/queue/runner.js",
     "test": "jest --runInBand",
-    "lint": "eslint src --ext ts"
+    "lint": "eslint src --ext ts",
+    "tsc": "tsc --noEmit"
   },
   "engines": {
     "node": ">=12.3.1"
@@ -26,6 +27,7 @@
     "express": "4.17.1",
     "express-async-errors": "3.1.1",
     "html-to-text": "5.1.1",
+    "ioredis": "4.17.3",
     "js-beautify": "1.11.0",
     "jsonwebtoken": "8.5.1",
     "mongoose": "5.9.24",
@@ -59,7 +61,6 @@
     "eslint-import-resolver-typescript": "2.0.0",
     "eslint-plugin-import": "2.22.0",
     "eslint-plugin-prettier": "3.1.4",
-    "ioredis": "4.17.3",
     "jest": "26.1.0",
     "mongodb": "3.5.9",
     "prettier": "2.0.5",
