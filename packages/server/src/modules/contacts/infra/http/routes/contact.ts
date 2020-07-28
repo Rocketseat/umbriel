@@ -4,6 +4,7 @@ import fs from 'fs';
 import multer from 'multer';
 import path from 'path';
 import { container } from 'tsyringe';
+import * as Yup from 'yup';
 
 import ChangeContactSubscriptionStatusService from '@modules/contacts/services/ChangeContactSubscriptionStatusService';
 import DeleteContactService from '@modules/contacts/services/DeleteContactService';
@@ -58,6 +59,14 @@ contactRouter.get('/', async (req, res) => {
 });
 
 contactRouter.post('/import', upload.single('file'), async (req, res) => {
+  const schema = Yup.object().shape({
+    tags: Yup.string().required(),
+  });
+
+  if (!(await schema.isValid(req.body))) {
+    return res.status(400).json({ error: 'Validation fails' });
+  }
+
   const { tags } = req.body;
 
   const filePath = path.resolve(uploadConfig.tmpDir, req.file.filename);
@@ -88,6 +97,14 @@ contactRouter.delete('/:id', async (req, res) => {
 });
 
 contactRouter.patch('/:contact_id/subscription', async (req, res) => {
+  const schema = Yup.object().shape({
+    subscribed: Yup.boolean().required(),
+  });
+
+  if (!(await schema.isValid(req.body))) {
+    return res.status(400).json({ error: 'Validation fails' });
+  }
+
   const { contact_id } = req.params;
   const { subscribed } = req.body;
 
