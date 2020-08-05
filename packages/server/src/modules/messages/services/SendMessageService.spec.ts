@@ -41,7 +41,7 @@ describe('Send Message', () => {
       { title: 'Class A' },
     ]);
 
-    const tagsIds = tags.map(tag => tag._id);
+    const tagsIds = tags.map((tag: { _id: string }) => tag._id);
 
     await Contact.create({
       email: 'diego@rocketseat.com.br',

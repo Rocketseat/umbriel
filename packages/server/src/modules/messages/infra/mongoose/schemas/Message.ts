@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema, Model, Types } from 'mongoose';
+import mongoose, { Document, Schema, Model } from 'mongoose';
 
 export type MessageAttributes = {
   subject: string;
@@ -12,7 +12,7 @@ export type MessageAttributes = {
     name: string;
     email: string;
   };
-  tags: Types.Array<string>;
+  tags: string[];
 };
 
 export type MessageDocument = Document & MessageAttributes;
