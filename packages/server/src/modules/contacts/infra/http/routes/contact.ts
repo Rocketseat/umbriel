@@ -29,7 +29,7 @@ contactRouter.get('/unsubscribe', async (req, res) => {
   );
 
   await changeContactSubscriptionStatus.execute({
-    contact_id: contact,
+    contact_id: String(contact),
     subscribed: false,
   });
 
@@ -45,14 +45,15 @@ contactRouter.get('/', async (req, res) => {
 
   const searchContacts = container.resolve(SearchContactsService);
 
+  const perPage = Number(per_page);
   const { contacts, totalCount } = await searchContacts.execute({
-    page,
-    per_page,
-    search,
+    page: Number(page),
+    per_page: perPage,
+    search: String(search),
   });
 
   res.header('X-Total-Count', String(totalCount));
-  res.header('X-Total-Page', String(Math.ceil(totalCount / per_page)));
+  res.header('X-Total-Page', String(Math.ceil(totalCount / perPage)));
 
   return res.json(contacts);
 });

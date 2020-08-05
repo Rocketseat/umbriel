@@ -17,16 +17,17 @@ senderRouter.use(ensureAuthenticated);
 senderRouter.get('/', async (req, res) => {
   const { page, per_page = 20, search = '' } = req.query;
 
+  const perPage = Number(per_page);
   const searchSenders = container.resolve(SearchSendersService);
 
   const { senders, totalCount } = await searchSenders.execute({
-    page,
-    per_page,
-    search,
+    page: Number(page),
+    per_page: perPage,
+    search: String(search),
   });
 
   res.header('X-Total-Count', String(totalCount));
-  res.header('X-Total-Page', String(Math.ceil(totalCount / per_page)));
+  res.header('X-Total-Page', String(Math.ceil(totalCount / perPage)));
 
   return res.json(senders);
 });

@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema, Model } from 'mongoose';
+import mongoose, { Document, Schema, Model, Types } from 'mongoose';
 
 export type MessageAttributes = {
   subject: string;
@@ -12,7 +12,7 @@ export type MessageAttributes = {
     name: string;
     email: string;
   };
-  tags: string[];
+  tags: Types.Array<string>;
 };
 
 export type MessageDocument = Document & MessageAttributes;
@@ -64,10 +64,6 @@ const MessageSchema = new Schema(
     timestamps: true,
   },
 );
-
-// MessageSchema.pre('save', function savetemplat() {
-
-// });
 
 export default mongoose.model<MessageDocument, MessageModel>(
   'Message',
