@@ -1,9 +1,9 @@
 import express from 'express';
 
 import { container } from 'tsyringe';
+import * as Yup from 'yup';
 
 import Contact from '@modules/contacts/infra/mongoose/schemas/Contact';
-import Message from '@modules/messages/infra/mongoose/schemas/Message';
 import Template from '@modules/messages/infra/mongoose/schemas/Template';
 import CreateMessageService from '@modules/messages/services/CreateMessageService';
 import DeleteMessageService from '@modules/messages/services/DeleteMessageService';
@@ -47,8 +47,22 @@ messageRouter.get('/:id', async (req, res) => {
   return res.json(message);
 });
 
-// @TODO: Parse template inside CreateMessageService
 messageRouter.post('/', async (req, res) => {
+  const schema = Yup.object().shape({
+    subject: Yup.string().required(),
+    body: Yup.string().required(),
+    template: Yup.string(),
+    sender: Yup.object().shape({
+      name: Yup.string().required(),
+      email: Yup.string().required(),
+    }),
+    tags: Yup.array().of(Yup.string()).required(),
+  });
+
+  if (!(await schema.isValid(req.body))) {
+    return res.status(400).json({ error: 'Validation fails' });
+  }
+
   const { subject, body, template, sender, tags } = req.body;
   let finalBody = body;
 

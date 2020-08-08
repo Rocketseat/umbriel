@@ -1,8 +1,8 @@
 import express from 'express';
 
 import { container } from 'tsyringe';
+import * as Yup from 'yup';
 
-import Template from '@modules/messages/infra/mongoose/schemas/Template';
 import CreateTemplateService from '@modules/messages/services/CreateTemplateService';
 import DeleteTemplateService from '@modules/messages/services/DeleteTemplateService';
 import GetTemplateService from '@modules/messages/services/GetTemplateService';
@@ -14,6 +14,15 @@ import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthentica
 const templateRouter = express.Router();
 
 templateRouter.use(ensureAuthenticated);
+
+const schema = Yup.object().shape({
+  title: Yup.string().required(),
+  content: Yup.string().test(
+    'find',
+    '{{ message_content }} variable is required inside template.',
+    (val: string) => val.includes('{{ message_content }}'),
+  ),
+});
 
 templateRouter.get('/', async (req, res) => {
   const { page, per_page = 20, search = '' } = req.query;
@@ -43,6 +52,10 @@ templateRouter.get('/:id', async (req, res) => {
 });
 
 templateRouter.post('/', async (req, res) => {
+  if (!(await schema.isValid(req.body))) {
+    return res.status(400).json({ error: 'Validation fails' });
+  }
+
   const { title, content } = req.body;
 
   const createTemplate = container.resolve(CreateTemplateService);
@@ -55,6 +68,10 @@ templateRouter.post('/', async (req, res) => {
 });
 
 templateRouter.put('/:id', async (req, res) => {
+  if (!(await schema.isValid(req.body))) {
+    return res.status(400).json({ error: 'Validation fails' });
+  }
+
   const { id } = req.params;
   const { title, content } = req.body;
 

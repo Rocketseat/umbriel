@@ -11,12 +11,6 @@ interface Request {
 
 class SaveTemplateService implements Service<Request, TemplateDocument> {
   execute({ data }: Request): Promise<TemplateDocument> {
-    if (!data.content.includes('{{ message_content }}')) {
-      throw new Error(
-        '{{ message_content }} variable is required inside template.',
-      );
-    }
-
     return Template.create(data);
   }
 }

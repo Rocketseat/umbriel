@@ -1,6 +1,7 @@
 import express from 'express';
 
 import { container } from 'tsyringe';
+import * as Yup from 'yup';
 
 import CreateSenderService from '@modules/senders/services/CreateSenderService';
 import DeleteSenderService from '@modules/senders/services/DeleteSenderService';
@@ -13,6 +14,11 @@ import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthentica
 const senderRouter = express.Router();
 
 senderRouter.use(ensureAuthenticated);
+
+const schema = Yup.object().shape({
+  name: Yup.string().required(),
+  email: Yup.string().email().required(),
+});
 
 senderRouter.get('/', async (req, res) => {
   const { page, per_page = 20, search = '' } = req.query;
@@ -43,6 +49,10 @@ senderRouter.get('/:id', async (req, res) => {
 });
 
 senderRouter.post('/', async (req, res) => {
+  if (!(await schema.isValid(req.body))) {
+    return res.status(400).json({ error: 'Validations fails' });
+  }
+
   const { name, email } = req.body;
 
   const createSender = container.resolve(CreateSenderService);
@@ -55,6 +65,10 @@ senderRouter.post('/', async (req, res) => {
 });
 
 senderRouter.put('/:id', async (req, res) => {
+  if (!(await schema.isValid(req.body))) {
+    return res.status(400).json({ error: 'Validations fails' });
+  }
+
   const { id } = req.params;
   const { name, email } = req.body;
 
