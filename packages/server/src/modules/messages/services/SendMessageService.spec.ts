@@ -78,19 +78,25 @@ describe('Send Message', () => {
         contact: expect.objectContaining({
           email: 'diego@rocketseat.com.br',
         }),
-        message,
+        message: expect.objectContaining({
+          _id: message._id,
+        }),
       },
       {
         contact: expect.objectContaining({
           email: 'cleiton@rocketseat.com.br',
         }),
-        message,
+        message: expect.objectContaining({
+          _id: message._id,
+        }),
       },
       {
         contact: expect.objectContaining({
           email: 'robson@rocketseat.com.br',
         }),
-        message,
+        message: expect.objectContaining({
+          _id: message._id,
+        }),
       },
     ]);
   });

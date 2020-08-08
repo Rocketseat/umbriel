@@ -10,7 +10,7 @@ export type RecipientAttributes = {
   recipientEmail: string;
   contact: string;
   message: string;
-  events?: Types.Array<MessageEvent>;
+  events?: MessageEvent[];
 };
 
 export type RecipientDocument = Document & RecipientAttributes;
@@ -33,7 +33,17 @@ const RecipientSchema = new Schema(
     },
     events: [
       {
-        type: String,
+        type: {
+          type: String,
+          required: true,
+          enum: ['deliver', 'open', 'click', 'bounce', 'complaint', 'reject'],
+        },
+        eventAt: {
+          type: Date,
+          required: true,
+          default: Date.now,
+        },
+        data: Schema.Types.Mixed,
       },
     ],
   },
