@@ -65,10 +65,6 @@ const MessageSchema = new Schema(
   },
 );
 
-// MessageSchema.pre('save', function savetemplat() {
-
-// });
-
 export default mongoose.model<MessageDocument, MessageModel>(
   'Message',
   MessageSchema,

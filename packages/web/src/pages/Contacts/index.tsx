@@ -16,8 +16,8 @@ import {
 import Modal from 'react-modal';
 
 import debounce from 'lodash.debounce';
-import api from 'services/axios';
 import { mutate } from 'swr';
+import api from '../../services/axios';
 import usePaginatedRequest from '../../services/usePaginatedRequest';
 
 import { Container } from './styles';

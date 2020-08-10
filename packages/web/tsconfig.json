@@ -18,12 +18,13 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react",
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "typeRoots": [
+      "../../node_modules/@types",
+      "src/@types"
+    ]
   },
   "include": [
-    "src"
-  ],
-  "files": [
-    "src/styles/styled.d.ts"
+    "src/**/*"
   ]
 }

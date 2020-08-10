@@ -15,8 +15,9 @@
     "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": true,
+    "skipLibCheck": true,
     "typeRoots": [
-      "node_modules/@types",
+      "../../node_modules/@types",
       "src/@types"
     ],
     "paths": {
@@ -25,9 +26,5 @@
       "@shared/*": ["shared/*"]
     }
   },
-  "include": ["src", "__tests__"],
-  "exclude": [
-    "node_modules",
-    "**/*.spec.ts"
-  ] 
+  "include": ["src", "__tests__"]
 }

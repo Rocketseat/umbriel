@@ -25,15 +25,17 @@ class ImportContactsService implements Service<Request, void> {
       },
     });
 
-    const existentTagsTitles = existentTags.map(tag => tag.title);
-    const existentTagsIds = existentTags.map(tag => tag._id);
+    const existentTagsTitles: string[] = existentTags.map(tag => tag.title);
+    const existentTagsIds: string[] = existentTags.map(tag => tag._id);
 
     const newTagsData = tags
       .filter(tag => !existentTagsTitles.includes(tag))
       .map(tag => ({ title: tag }));
 
     const createdTags = await Tag.create(newTagsData);
-    let createdTagsIds = createdTags?.map(tag => tag._id);
+    let createdTagsIds: string[] = createdTags?.map(
+      (tag: { _id: string }) => tag._id,
+    );
 
     if (!createdTagsIds) {
       createdTagsIds = [];

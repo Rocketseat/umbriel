@@ -26,7 +26,7 @@ describe('Create Message', () => {
       { title: 'Class A' },
     ]);
 
-    const tagsIds = tags.map(tag => tag._id);
+    const tagsIds: string[] = tags.map((tag: { _id: string }) => tag._id);
 
     const messageData = {
       sender: {

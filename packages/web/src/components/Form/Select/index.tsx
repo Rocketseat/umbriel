@@ -18,7 +18,6 @@ const AsyncSelect: React.FC<Props> = ({ name, label, note, ...rest }) => {
     registerField({
       name: fieldName,
       ref: selectRef.current,
-      path: 'state.value',
       getValue: (ref: any) => {
         if (rest.isMulti) {
           if (!ref.state.value) {

@@ -1,17 +1,16 @@
 import React from 'react';
-import { Router } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 import Routes from './routes/main.routes';
-import history from './services/history';
 
 const App: React.FC = () => {
   return (
-    <Router history={history}>
+    <BrowserRouter>
       <div id="app">
         <Routes />
       </div>
-    </Router>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;

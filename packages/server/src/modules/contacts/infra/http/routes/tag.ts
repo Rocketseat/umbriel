@@ -16,7 +16,7 @@ tagRouter.get('/', async (req, res) => {
 
   const searchTags = container.resolve(SearchTagsService);
 
-  const tags = await searchTags.execute({ search });
+  const tags = await searchTags.execute({ search: String(search) });
 
   return res.json(tags);
 });
@@ -24,7 +24,9 @@ tagRouter.get('/', async (req, res) => {
 tagRouter.get('/recipients', async (req, res) => {
   const { tags } = req.query;
 
-  const tagsArray = tags.split(',').map((tag: string) => tag.trim());
+  const tagsArray = String(tags)
+    .split(',')
+    .map((tag: string) => tag.trim());
 
   const getRecipientsFromTags = new GetRecipientsFromTags();
 

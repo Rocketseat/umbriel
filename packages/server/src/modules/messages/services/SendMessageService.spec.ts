@@ -41,7 +41,7 @@ describe('Send Message', () => {
       { title: 'Class A' },
     ]);
 
-    const tagsIds = tags.map(tag => tag._id);
+    const tagsIds = tags.map((tag: { _id: string }) => tag._id);
 
     await Contact.create({
       email: 'diego@rocketseat.com.br',
@@ -78,19 +78,25 @@ describe('Send Message', () => {
         contact: expect.objectContaining({
           email: 'diego@rocketseat.com.br',
         }),
-        message,
+        message: expect.objectContaining({
+          _id: message._id,
+        }),
       },
       {
         contact: expect.objectContaining({
           email: 'cleiton@rocketseat.com.br',
         }),
-        message,
+        message: expect.objectContaining({
+          _id: message._id,
+        }),
       },
       {
         contact: expect.objectContaining({
           email: 'robson@rocketseat.com.br',
         }),
-        message,
+        message: expect.objectContaining({
+          _id: message._id,
+        }),
       },
     ]);
   });
