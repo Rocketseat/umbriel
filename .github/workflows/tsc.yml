@@ -1,4 +1,4 @@
-name: Lint
+name: Type Checking
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   code:
-    name: Lint code
+    name: Type Checking
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -19,17 +19,11 @@ jobs:
         with:
           node-version: "12"
 
-      - name: Install dependencies
+      - name: Install all dependencies
         uses: Borales/actions-yarn@v2.3.0
-      
-      - name: Install dependencies server
-        run: cd packages/server && yarn
-      
-      - name: Install dependencies web
-        run: cd packages/web && yarn
-        
+
       - name: Run type checking server
         run: cd packages/server && yarn tsc
-      
+
       - name: Run type checking web
         run: cd packages/web && yarn tsc

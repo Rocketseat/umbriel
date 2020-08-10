@@ -9,7 +9,6 @@
     "build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./dist && copyfiles -u 1 src/**/*.html dist",
     "start:server": "node dist/shared/infra/http/server.js",
     "start:queue": "node dist/shared/infra/queue/runner.js",
-    "test": "jest --runInBand",
     "lint": "eslint src --ext ts",
     "tsc": "tsc --noEmit"
   },
@@ -63,10 +62,8 @@
     "eslint-import-resolver-typescript": "2.0.0",
     "eslint-plugin-import": "2.22.0",
     "eslint-plugin-prettier": "3.1.4",
-    "jest": "26.1.0",
     "mongodb": "3.5.9",
     "prettier": "2.0.5",
-    "ts-jest": "26.1.3",
     "ts-node": "8.10.2",
     "ts-node-dev": "1.0.0-pre.52",
     "tsconfig-paths": "3.9.0",

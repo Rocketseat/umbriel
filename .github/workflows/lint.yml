@@ -19,14 +19,8 @@ jobs:
         with:
           node-version: "12"
 
-      - name: Install dependencies
+      - name: Install all dependencies
         uses: Borales/actions-yarn@v2.3.0
-      
-      - name: Install dependencies server
-        run: cd packages/server && yarn
-      
-      - name: Install dependencies web
-        run: cd packages/web && yarn
-        
+
       - name: Run ESLint
         run: yarn lint

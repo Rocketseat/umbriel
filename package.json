@@ -3,8 +3,15 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
   "scripts": {
-    "lint": "eslint --ext .tsx,.ts, packages/server/src packages/web/src"
+    "lint": "eslint --ext .tsx,.ts, packages/**/src",
+    "test": "jest --runInBand"
   },
   "husky": {
     "hooks": {
@@ -21,6 +28,7 @@
   "devDependencies": {
     "@commitlint/cli": "9.1.1",
     "@commitlint/config-conventional": "9.1.1",
+    "@types/jest": "26.0.9",
     "@typescript-eslint/eslint-plugin": "3.7.0",
     "@typescript-eslint/parser": "3.7.0",
     "commitizen": "4.1.2",
@@ -36,8 +44,10 @@
     "eslint-plugin-react": "7.19.0",
     "eslint-plugin-react-hooks": "2.5.0",
     "husky": "4.2.5",
+    "jest": "26.2.2",
     "lint-staged": "10.2.11",
     "prettier": "2.0.5",
+    "ts-jest": "26.1.4",
     "typescript": "3.9.7"
   },
   "config": {

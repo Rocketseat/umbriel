@@ -19,7 +19,7 @@ services:
       - umbriel-network
     links:
       - umbriel-mongo
-      - umbriel-redis 
+      - umbriel-redis
     container_name: umbriel-api
     command: yarn dev
     ports:
@@ -39,10 +39,10 @@ services:
       - umbriel-network
     links:
       - umbriel-mongo
-      - umbriel-redis 
+      - umbriel-redis
     container_name: umbriel-queue
     command: yarn queue
-    
+
   umbriel-mongo:
     image: bitnami/mongodb:latest
     container_name: umbriel-mongo
@@ -66,6 +66,8 @@ services:
     environment:
       - ALLOW_EMPTY_PASSWORD=no
       - REDIS_PASSWORD=${REDIS_PASS}
+    ports:
+      - "6379:6379"
     volumes:
       - /tmp/redis:/bitnami/redis/data
     networks:
