@@ -11,7 +11,7 @@ interface Message {
 }
 
 class FakeProvider implements MailProvider {
-  async sendEmail(data: any): Promise<void> {
+  async sendEmail(data: Message): Promise<void> {
     console.log(data);
   }
 }

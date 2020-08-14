@@ -12,6 +12,7 @@ type ContactModel = Model<ContactDocument> & {
 
 const ContactSchema = new Schema(
   {
+    name: String,
     email: {
       type: String,
       lowercase: true,
@@ -29,6 +30,7 @@ const ContactSchema = new Schema(
         ref: 'Tag',
       },
     ],
+    integrationId: String,
   },
   {
     timestamps: true,

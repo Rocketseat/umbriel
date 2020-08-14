@@ -15,7 +15,7 @@ import TemplateForm from '../pages/TemplateForm';
 import SenderList from '../pages/SenderList';
 import SenderForm from '../pages/SenderForm';
 
-const Routes = () => {
+const Routes: React.FC = () => {
   return (
     <Switch>
       <Route path="/" exact component={SignIn} />

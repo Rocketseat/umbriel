@@ -40,6 +40,7 @@
     "jsx-a11y/label-has-associated-control": "off",
     "react/jsx-curly-newline": "off",
     "no-shadow": "off",
+    "no-alert": "off",
     "@typescript-eslint/ban-types": "warn",
     "react/jsx-props-no-spreading": "off",
     "react/jsx-one-expression-per-line": "off",
