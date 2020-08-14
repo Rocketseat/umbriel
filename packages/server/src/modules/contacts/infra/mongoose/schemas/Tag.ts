@@ -14,6 +14,7 @@ const TagSchema = new Schema(
       unique: true,
       required: true,
     },
+    integrationId: String,
   },
   {
     timestamps: true,

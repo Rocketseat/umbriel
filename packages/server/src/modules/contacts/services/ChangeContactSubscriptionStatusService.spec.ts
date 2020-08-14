@@ -1,5 +1,3 @@
-import { Readable } from 'stream';
-
 import Contact from '@modules/contacts/infra/mongoose/schemas/Contact';
 import Tag from '@modules/contacts/infra/mongoose/schemas/Tag';
 

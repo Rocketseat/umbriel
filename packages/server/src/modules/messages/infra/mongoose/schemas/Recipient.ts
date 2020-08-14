@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema, Model, Types } from 'mongoose';
+import mongoose, { Document, Schema, Model } from 'mongoose';
 
 type MessageEvent = {
   type: string;
