@@ -8,11 +8,23 @@ import axios from '../../services/axios';
 import { Container } from './styles';
 import Box from '../../components/Box';
 import Button from '../../components/Button';
-import { Form, Input, CodeInput, AsyncSelect } from '../../components/Form';
+import {
+  Form,
+  Input,
+  CodeInput,
+  AsyncSelect,
+  Checkbox,
+} from '../../components/Form';
 
 interface Tag {
   _id: string;
   title: string;
+}
+
+interface Segment {
+  _id: string;
+  title: string;
+  tags: string[];
 }
 
 interface Template {
@@ -30,6 +42,12 @@ interface RouteParams {
   id: string;
 }
 
+interface CheckboxOption {
+  id: string;
+  value: string;
+  label: string;
+}
+
 type Props = RouteComponentProps<RouteParams>;
 
 const MessageForm: React.FC<Props> = ({ history, match }) => {
@@ -37,7 +55,12 @@ const MessageForm: React.FC<Props> = ({ history, match }) => {
   const [recipients, setRecipients] = useState(0);
 
   const [loading, setLoading] = useState(false);
+  const [filter, setFilter] = useState(false);
   const { id } = match.params;
+
+  const checkboxOptions: CheckboxOption[] = [
+    { id: 'filtro', value: 'ok', label: 'Filtro avançado' },
+  ];
 
   useEffect(() => {
     async function loadData() {
@@ -59,10 +82,14 @@ const MessageForm: React.FC<Props> = ({ history, match }) => {
     async data => {
       try {
         setLoading(true);
-
         const schema = Yup.object().shape({
           subject: Yup.string().required('O assunto é obrigatório'),
-          tags: Yup.array(Yup.string()).required('Selecione no mínimo uma tag'),
+          segments: Yup.array(Yup.string()),
+          tags: Yup.array(Yup.string()).when(
+            'segments',
+            (segments: string[], field: { required: () => any }) =>
+              segments.length !== 0 ? field : field.required(),
+          ),
           sender: Yup.string().required('O remetente é obrigatório'),
           template: Yup.string().required('O template é obrigatório'),
           body: Yup.string().required('O conteúdo da mensagem é obrigatório'),
@@ -72,7 +99,15 @@ const MessageForm: React.FC<Props> = ({ history, match }) => {
           abortEarly: false,
         });
 
-        await axios.post('/messages', data);
+        await axios.post('/messages', {
+          subject: data.subject,
+          sender: data.sender,
+          template: data.template,
+          body: data.body,
+          tags: data.tags,
+          segments: data.segments,
+          excludeTags: data.excludeTags,
+        });
 
         navigateToList();
       } catch (err) {
@@ -92,6 +127,17 @@ const MessageForm: React.FC<Props> = ({ history, match }) => {
     },
     [navigateToList],
   );
+
+  const loadSegments = useCallback(async search => {
+    const response = await axios.get<Segment[]>('/segments', {
+      params: { search },
+    });
+
+    return response.data.map(segment => ({
+      value: segment.title,
+      label: segment.title,
+    }));
+  }, []);
 
   const loadTags = useCallback(async search => {
     const response = await axios.get<Tag[]>('/tags', {
@@ -127,7 +173,9 @@ const MessageForm: React.FC<Props> = ({ history, match }) => {
   }, []);
 
   const handleCountRecipients = useCallback(async value => {
-    const tags = value.map((tag: OptionTypeBase) => tag.value).join(',');
+    const tags = value?.map((tag: OptionTypeBase) => tag.value).join(',');
+
+    const segments = formRef.current?.getFieldValue('segments');
 
     const response = await axios.get<{ recipients: number }>(
       '/tags/recipients',
@@ -135,9 +183,32 @@ const MessageForm: React.FC<Props> = ({ history, match }) => {
         params: { tags },
       },
     );
-
-    setRecipients(response.data.recipients);
+    setRecipients(response?.data?.recipients);
   }, []);
+
+  const handleRemoveRecipients = useCallback(
+    async value => {
+      if (value.length !== 0) {
+        const tag = value[value.length - 1].value;
+
+        const response = await axios.get<{ recipients: number }>(
+          '/tags/recipients',
+          {
+            params: { tags: tag },
+          },
+        );
+
+        if (recipients !== 0) {
+          setRecipients(recipients - response?.data?.recipients);
+        }
+      }
+    },
+    [recipients],
+  );
+
+  const addFilter = useCallback(() => {
+    setFilter(!filter);
+  }, [filter]);
 
   return (
     <Container>
@@ -160,12 +231,42 @@ const MessageForm: React.FC<Props> = ({ history, match }) => {
                 : 'Selecione as tags para calcular'
             }
             isMulti
-            placeholder="Selecione as tags..."
+            placeholder="Selecione a(s) tag(s)..."
             defaultOptions
             loadingMessage={() => 'Carregando tags...'}
             loadOptions={loadTags}
             onChange={handleCountRecipients}
           />
+
+          <AsyncSelect
+            label="Segmentos"
+            name="segments"
+            isMulti
+            placeholder="Selecione o(s) segmento(s)..."
+            defaultOptions
+            loadingMessage={() => 'Carregando segmentos...'}
+            loadOptions={loadSegments}
+            onChange={handleCountRecipients}
+          />
+
+          <Checkbox
+            name="checkbox"
+            options={checkboxOptions}
+            onChange={addFilter}
+          />
+
+          {filter && (
+            <AsyncSelect
+              name="excludeTags"
+              note="Remover tag(s)"
+              isMulti
+              placeholder="Selecione uma(s) tag(s)"
+              defaultOptions
+              loadingMessage={() => 'Carregando tags...'}
+              loadOptions={loadTags}
+              onChange={handleRemoveRecipients}
+            />
+          )}
 
           <AsyncSelect
             label="Template"

@@ -12,22 +12,24 @@ interface Props extends AsyncProps<OptionTypeBase> {
 }
 
 const AsyncSelect: React.FC<Props> = ({ name, label, note, ...rest }) => {
-  const selectRef = useRef(null);
+  const selectValueRef = useRef({ value: rest.isMulti ? [] : '' });
   const { fieldName, defaultValue, registerField, error } = useField(name);
 
   useEffect(() => {
     registerField({
       name: fieldName,
-      ref: selectRef.current,
+      setValue: (ref, value) => {
+        selectValueRef.current.value = value || null;
+      },
       getValue: (ref: any) => {
         if (rest.isMulti) {
-          if (!ref.select.state.value) {
+          const selectValue: OptionTypeBase[] = selectValueRef.current.value;
+
+          if (!selectValue) {
             return [];
           }
 
-          return ref.select.state.value.map(
-            (option: OptionTypeBase) => option.value,
-          );
+          return selectValue.map(option => option.value);
         }
         if (!ref.select.state.value) {
           return '';

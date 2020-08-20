@@ -22,15 +22,33 @@ tagRouter.get('/', async (req, res) => {
 });
 
 tagRouter.get('/recipients', async (req, res) => {
-  const { tags } = req.query;
+  const { tags, segments, excludeTags } = req.query;
 
-  const tagsArray = String(tags)
-    .split(',')
-    .map((tag: string) => tag.trim());
+  const tagsArray = tags
+    ? String(tags)
+        .split(',')
+        .map((tag: string) => tag.trim())
+    : [];
+
+  const segmentsArray = segments
+    ? String(segments)
+        .split(',')
+        .map((tag: string) => tag.trim())
+    : [];
+
+  const exlcudeTagsArray = excludeTags
+    ? String(excludeTags)
+        .split(',')
+        .map((tag: string) => tag.trim())
+    : [];
 
   const getRecipientsFromTags = new GetRecipientsFromTags();
 
-  const recipients = await getRecipientsFromTags.execute({ tags: tagsArray });
+  const recipients = await getRecipientsFromTags.execute({
+    tags: tagsArray,
+    segments: segmentsArray,
+    excludeTags: exlcudeTagsArray,
+  });
 
   return res.json({ recipients: recipients.length });
 });

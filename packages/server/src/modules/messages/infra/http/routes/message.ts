@@ -52,18 +52,29 @@ messageRouter.post('/', async (req, res) => {
     subject: Yup.string().required(),
     body: Yup.string().required(),
     template: Yup.string(),
-    sender: Yup.object().shape({
-      name: Yup.string().required(),
-      email: Yup.string().required(),
-    }),
-    tags: Yup.array().of(Yup.string()).required(),
+    sender: Yup.string().required(),
+    segments: Yup.array(Yup.string()),
+    tags: Yup.array(Yup.string()).when(
+      'segments',
+      (segments: string[], field: { required: () => any }) =>
+        segments.length !== 0 ? field : field.required(),
+    ),
   });
 
   if (!(await schema.isValid(req.body))) {
     return res.status(400).json({ error: 'Validation fails' });
   }
 
-  const { subject, body, template, sender, tags } = req.body;
+  const {
+    subject,
+    body,
+    template,
+    sender,
+    tags,
+    segments,
+    excludeTags,
+  } = req.body;
+
   let finalBody = body;
 
   const createMessage = container.resolve(CreateMessageService);
@@ -86,7 +97,10 @@ messageRouter.post('/', async (req, res) => {
     }
   }
 
-  const recipients = await Contact.findByTags(tags);
+  const recipients = await Contact.findByTags(tags, {
+    subscribed: true,
+  });
+
   const recipientsCount = recipients.length;
 
   const messageData = {
@@ -102,7 +116,11 @@ messageRouter.post('/', async (req, res) => {
     tags,
   };
 
-  const message = await createMessage.execute({ data: messageData });
+  const message = await createMessage.execute({
+    data: messageData,
+    segmentsArray: segments,
+    excludeTags,
+  });
 
   return res.json(message);
 });
@@ -111,7 +129,9 @@ messageRouter.post('/:id/send', async (req, res) => {
   const { id } = req.params;
 
   const sendMessage = container.resolve(SendMessageService);
-  const message = await sendMessage.execute(id);
+  const message = await sendMessage.execute({
+    messageId: id,
+  });
 
   return res.json(message);
 });

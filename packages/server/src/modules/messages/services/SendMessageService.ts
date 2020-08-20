@@ -1,4 +1,4 @@
-import { injectable, inject } from 'tsyringe';
+import { injectable, inject, container } from 'tsyringe';
 
 import Contact from '@modules/contacts/infra/mongoose/schemas/Contact';
 import Message, {
@@ -10,7 +10,9 @@ import LoggerProvider from '@shared/adapters/models/LoggerProvider';
 import QueueProvider from '@shared/adapters/models/QueueProvider';
 import Service from '@shared/core/Service';
 
-type Request = string;
+interface Request {
+  messageId: string;
+}
 type Response = MessageDocument;
 
 @injectable()
@@ -20,8 +22,8 @@ class SendMessageService implements Service<Request, Response> {
     @inject('LoggerProvider') private loggerProvider: LoggerProvider,
   ) {}
 
-  async execute(id: Request): Promise<Response> {
-    const message = await Message.findById(id);
+  async execute({ messageId }: Request): Promise<Response> {
+    const message = await Message.findById(messageId);
 
     if (!message) {
       throw new Error('Message not found');

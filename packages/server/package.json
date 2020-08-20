@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev:server": "ts-node-dev --inspect --respawn --transpile-only --ignore-watch node_modules -r tsconfig-paths/register src/shared/infra/http/server.ts",
-    "dev:queue": "ts-node-dev --inspect --respawn --transpile-only --ignore-watch node_modules -r tsconfig-paths/register src/shared/infra/queue/runner.ts",
+    "dev:queue": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules -r tsconfig-paths/register src/shared/infra/queue/runner.ts",
     "build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./dist && copyfiles -u 1 src/**/*.html dist",
     "start:server": "node dist/shared/infra/http/server.js",
     "start:queue": "node dist/shared/infra/queue/runner.js",

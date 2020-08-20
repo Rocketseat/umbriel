@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import contactRouter from '@modules/contacts/infra/http/routes/contact';
+import segmentRouter from '@modules/contacts/infra/http/routes/segment';
 import tagRouter from '@modules/contacts/infra/http/routes/tag';
 import messageRouter from '@modules/messages/infra/http/routes/message';
 import templateRouter from '@modules/messages/infra/http/routes/template';
@@ -15,5 +16,6 @@ v1Router.use('/messages', messageRouter);
 v1Router.use('/templates', templateRouter);
 v1Router.use('/sessions', sessionRouter);
 v1Router.use('/senders', senderRouter);
+v1Router.use('/segments', segmentRouter);
 
 export default v1Router;
