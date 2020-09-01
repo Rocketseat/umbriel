@@ -9,6 +9,9 @@ import MessageList from '../pages/MessageList';
 import MessageForm from '../pages/MessageForm';
 import MessageDetail from '../pages/MessageDetail';
 
+import SegmentList from '../pages/SegmentList';
+import SegmentForm from '../pages/SegmentForm';
+
 import TemplateList from '../pages/TemplateList';
 import TemplateForm from '../pages/TemplateForm';
 
@@ -29,6 +32,15 @@ const Routes: React.FC = () => {
         path="/messages/show/:id"
         exact
         component={MessageDetail}
+      />
+
+      <Route isPrivate path="/segments" exact component={SegmentList} />
+      <Route isPrivate path="/segments/create" exact component={SegmentForm} />
+      <Route
+        isPrivate
+        path="/segments/edit/:id"
+        exact
+        component={SegmentForm}
       />
 
       <Route isPrivate path="/templates" exact component={TemplateList} />

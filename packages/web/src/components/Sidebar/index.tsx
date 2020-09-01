@@ -13,6 +13,7 @@ const Sidebar: React.FC = () => {
       <Nav>
         <NavLink to="/contacts">Contatos</NavLink>
         <NavLink to="/messages">Mensagens</NavLink>
+        <NavLink to="/segments">Segmentos</NavLink>
         <NavLink to="/templates">Templates</NavLink>
         <NavLink to="/senders">Remetentes</NavLink>
       </Nav>
