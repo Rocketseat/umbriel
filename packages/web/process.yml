@@ -1,0 +1,5 @@
+apps:
+  - script   : shared/infra/http/server.js
+    name     : server
+  - script   : shared/infra/queue/runner.js
+    name     : queue
