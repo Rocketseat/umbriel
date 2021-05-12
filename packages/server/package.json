@@ -31,7 +31,7 @@
     "jsonwebtoken": "8.5.1",
     "mongoose": "5.8.9",
     "multer": "1.4.2",
-    "nodemailer": "6.4.10",
+    "nodemailer": "6.4.16",
     "reflect-metadata": "0.1.13",
     "tsyringe": "4.3.0",
     "winston": "3.3.3",
