@@ -23,7 +23,7 @@
     "cors": "2.8.5",
     "csv-parse": "4.11.1",
     "dotenv": "8.2.0",
-    "express": "4.17.1",
+    "express": "4.17.3",
     "express-async-errors": "3.1.1",
     "html-to-text": "5.1.1",
     "ioredis": "4.17.3",
